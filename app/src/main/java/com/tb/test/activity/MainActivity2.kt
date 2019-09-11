@@ -46,6 +46,7 @@ class MainActivity2 : TbBaseTitleActivity(), SpringView.OnFreshListener {
                     listData.addAll(listData)
                     adapter.notifyItemRangeInserted(size, listData.size)
 
+                    LogUtils.log("CESHI")
                 }
             }
         }.start()
