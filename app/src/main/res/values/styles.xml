@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="activityTheme">
+
+    </style>
+
+    <style name="tb" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/tr</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
+  <style name="tb1" parent="picture.default.style">
+
+      <!--裁剪页面标题背景色-->
+      <item name="picture.crop.toolbar.bg">@color/tb_green</item>
+      <!--裁剪页面状态栏颜色-->
+      <item name="picture.crop.status.color">@color/tb_green</item>
+      <!--裁剪页面标题文字颜色-->
+      <item name="picture.crop.title.color">@color/white</item>
+
+    </style>
+
+
+
+
+</resources>

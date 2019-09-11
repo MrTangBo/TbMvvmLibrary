@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/errorIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside" />
+
+
+    <TextView
+        android:id="@+id/errorDescribe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x30"
+        android:textColor="@color/tb_text_dark" />
+
+
+    <com.flyco.roundview.RoundTextView
+        android:id="@+id/errorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x50"
+        android:paddingStart="@dimen/x30"
+        android:paddingTop="@dimen/x12"
+        android:paddingEnd="@dimen/x30"
+        android:paddingBottom="@dimen/x12"
+        android:text="@string/tb_error_text"
+        android:textColor="@color/tb_white"
+        android:textSize="@dimen/tb_text28"
+        app:rv_backgroundColor="@color/tb_green"
+        app:rv_backgroundPressColor="@color/tb_transparent_half"
+        app:rv_cornerRadius="@dimen/x8"
+        app:rv_isRippleEnable="true" />
+
+
+</LinearLayout>

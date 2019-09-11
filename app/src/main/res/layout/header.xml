@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <com.tb.mvvm_library.tbAutoscrolllayout.ScrollTextView
+            android:id="@+id/scrollTx"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x88" />
+
+
+        <com.tb.mvvm_library.tbAutoscrolllayout.VerticalScrollTextView
+            android:id="@+id/verticalScrollTx"
+            android:layout_width="match_parent"
+            app:vst_textColor="@color/colorAccent"
+            app:vst_scrollOrientation="down"
+            app:vst_textStyle="bold_italic"
+            app:vst_textSize="@dimen/tb_text28"
+            android:layout_height="@dimen/x98" />
+
+
+        <com.tb.mvvm_library.tbAutoscrolllayout.VerticalScrollLayout
+            android:id="@+id/scrollLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</layout>

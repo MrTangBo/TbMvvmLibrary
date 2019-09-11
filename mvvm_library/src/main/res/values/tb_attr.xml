@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--LoadingLayout属性-->
+    <declare-styleable name="LoadingLayout">
+        <attr name="loadingView" format="reference" />
+        <attr name="errorView" format="reference" />
+        <attr name="emptyView" format="reference" />
+    </declare-styleable>
+
+    <!--LGNineGridView属性-->
+    <declare-styleable name="LGNineGridView">
+        <attr name="space" format="dimension" />
+        <attr name="singleImageRatio" format="float" />
+        <attr name="singleImageWidthRatioToParent" format="float" />
+        <attr name="singleImageRatioMode" format="integer" />
+    </declare-styleable>
+
+
+    <!--TbMenuItem属性-->
+    <declare-styleable name="TbMenuItemLayout">
+
+        <attr name="itemBg" format="color|reference" />
+        <attr name="itemLineBg" format="color|reference" />
+
+        <attr name="leftText" format="string" />
+        <attr name="leftTextColor" format="color|reference" />
+        <attr name="leftTextSize" format="dimension" />
+
+        <attr name="rightText" format="string" />
+        <attr name="rightTextColor" format="color|reference" />
+        <attr name="rightTextSize" format="dimension" />
+
+        <attr name="leftIconSrc" format="reference" />
+        <attr name="leftIconVisible" format="boolean" />
+
+        <attr name="rightIconSrc" format="reference" />
+        <attr name="rightIconVisible" format="boolean" />
+
+    </declare-styleable>
+
+
+    <!--TbBottomNavigation属性-->
+    <declare-styleable name="TbBottomNavigation">
+
+        <attr name="unSelectTxColor" format="color|reference" />
+        <attr name="unSelectTxSize" format="dimension" />
+        <attr name="selectTxColor" format="color|reference" />
+        <attr name="selectTxSize" format="color|reference" />
+        <attr name="isCenterBulge" format="boolean" />
+        <attr name="centerHeight" format="dimension" />
+        <attr name="bg" format="reference" />
+
+    </declare-styleable>
+
+
+    <!--VerticalScrollTextView属性-->
+    <declare-styleable name="VerticalScrollTextView">
+        <attr name="vst_sleepTime" format="integer" />
+        <attr name="vst_animDuration" format="integer" />
+        <attr name="vst_textSize" format="dimension" />
+        <attr name="vst_textColor" format="color" />
+        <attr name="vst_singleLine" format="boolean" />
+        <attr name="vst_textStyle" format="enum" >
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="italic" value="2"/>
+            <enum name="bold_italic" value="3"/>
+        </attr>
+
+        <attr name="vst_scrollOrientation" format="enum">
+            <enum name="up" value="0" />
+            <enum name="down" value="1" />
+        </attr>
+
+    </declare-styleable>
+
+    <!--属性-->
+    <declare-styleable name="VerticalScrollLayout">
+        <attr name="vsl_animDuration" format="integer" />
+        <attr name="vsl_sleepTime" format="integer" />
+        <attr name="vsl_isCusDuration" format="boolean" />
+    </declare-styleable>
+
+
+</resources>

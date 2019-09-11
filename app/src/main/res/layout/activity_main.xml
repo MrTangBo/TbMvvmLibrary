@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.widget.ImageView.ScaleType" />
+
+        <variable
+            name="cotent"
+            type="com.tb.test.activity.TestInfo" />
+
+        <variable
+            name="url"
+            type="String" />
+
+        <variable
+            name="scaleType"
+            type="ScaleType" />
+
+
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/transitionsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipChildren="false"
+        android:orientation="vertical"
+        tools:context=".activity.MainActivity">
+
+        <include layout="@layout/tb_include_toolbar" />
+
+
+        <com.tb.mvvm_library.view.TbBottomNavigation
+            android:id="@+id/bottomN"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x88"
+            android:layout_marginTop="@dimen/x150"
+            android:orientation="horizontal"
+            app:centerHeight="@dimen/x150"
+            app:isCenterBulge="false">
+
+        </com.tb.mvvm_library.view.TbBottomNavigation>
+
+        <TextView
+            android:id="@+id/tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/x300"
+            android:padding="@dimen/x30"
+            android:text="@{cotent.list[0].Address+``+cotent.currentpage,default=`测试`}" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x300"
+            android:background="@color/transparent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <FrameLayout
+            android:id="@+id/fragment_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/mBanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x300"
+            android:transitionName="fab" />
+
+        <Button
+            android:id="@+id/fab_button"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@mipmap/ic_launcher"
+            android:elevation="5dp"
+            android:transitionName="fab" />
+
+
+    </LinearLayout>
+
+
+</layout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x150"
+            android:gravity="center"
+            android:text="测试window"
+            android:textColor="@color/white"
+            app:rv_cornerRadius="@dimen/x30"
+            app:rv_backgroundColor="@color/tb_green" />
+
+
+    </LinearLayout>
+
+
+</layout>

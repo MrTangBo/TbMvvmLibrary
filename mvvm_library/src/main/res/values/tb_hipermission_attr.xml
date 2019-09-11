@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="permissionNames">
+        <item>@string/permission_storage</item>
+        <item>@string/permission_location</item>
+        <item>@string/permission_camera</item>
+    </array>
+
+    <attr name="PermissionBackround" format="reference" />
+    <attr name="PermissionTitleColor" format="color" />
+    <attr name="PermissionMsgColor" format="color" />
+    <attr name="PermissionItemTextColor" format="color" />
+    <attr name="PermissionButtonTextColor" format="color" />
+    <attr name="PermissionButtonBackground" format="reference" />
+    <attr name="PermissionBgFilterColor" format="color" />
+    <attr name="PermissionIconFilterColor" format="color" />
+
+</resources>

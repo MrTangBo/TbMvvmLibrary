@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/line_vertical"
+        android:clipChildren="false"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <com.tb.mvvm_library.view.TbBottomNavigation
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x88"
+            app:isCenterBulge="true"
+            app:centerHeight="@dimen/x108"
+            app:selectTxColor="@color/colorAccent" />
+
+
+    </LinearLayout>
+
+</layout>

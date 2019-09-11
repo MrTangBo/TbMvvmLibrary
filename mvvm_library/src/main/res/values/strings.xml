@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">mvvm_library</string>
+
+
+    <string name="tb_loading_text">加载中...</string>
+    <string name="tb_error_text">重新加载</string>
+    <string name="tb_empty_text">刷新数据</string>
+
+
+    <string name="wait_second">剩余%d秒</string>
+
+
+    <string name="msg_camera_framework_bug">相机被占用或没有相机权限，请检查</string>
+    <string name="button_ok">退出</string>
+    <string name="scan_code">扫一扫</string>
+    <string name="open_flash">打开闪光灯</string>
+    <string name="close_flash">关闭闪光灯</string>
+    <string name="gallery">相册</string>
+    <string name="scan_failed_tip">图片解析失败，换个图片试试.</string>
+
+
+</resources>
