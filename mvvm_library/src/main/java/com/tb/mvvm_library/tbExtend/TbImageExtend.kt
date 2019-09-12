@@ -46,24 +46,6 @@ fun ImageView.showImage(imageUrl: String, scaleType: ImageView.ScaleType = Image
     GlideUtil.getInstance().showImage(this.context, imageUrl, this, scaleType)
 }
 
-//设置图片固定的大小尺寸
-@BindingAdapter("imageUrlWH", "tb_width", "tb_height", requireAll = false)
-fun ImageView.showImageWH(imageUrl: String, width: Int, height: Int) {
-    GlideUtil.getInstance().showImageWH(this.context, imageUrl, this, width, height)
-}
-
-//以图片宽度为基准
-@BindingAdapter("imageUrlW", "tb_width", requireAll = false)
-fun ImageView.showImageWidthRatio(imageUrl: String, width: Int) {
-    GlideUtil.getInstance().showImageWidthRatio(this.context, imageUrl, this, width)
-}
-
-//以图片高度为基准
-@BindingAdapter("imageUrlH", "tb_height", requireAll = false)
-fun ImageView.showImageHeightRatio(imageUrl: String, height: Int) {
-    GlideUtil.getInstance().showImageWidthRatio(this.context, imageUrl, this, height)
-}
-
 /*上传图片到自己的服务器*/
 @SuppressLint("CheckResult")
 fun ArrayList<String>?.tbUpLoadImage(
