@@ -182,7 +182,7 @@ fun Any.tbNotifyEnabled(activity: AppCompatActivity? = null, messageTx: String =
                 val localIntent = Intent()
                 localIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//>=8.0
-                    localIntent.action =Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                    localIntent.action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
                     localIntent.putExtra(Settings.EXTRA_APP_PACKAGE, pkg)
                 } else {
                     localIntent.action = "android.settings.APP_NOTIFICATION_SETTINGS"

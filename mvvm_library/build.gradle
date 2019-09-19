@@ -23,7 +23,6 @@ android {
     dataBinding {
         enabled = true
     }
-
     uploadArchives {//生成本地仓库
         repositories {
             mavenDeployer {

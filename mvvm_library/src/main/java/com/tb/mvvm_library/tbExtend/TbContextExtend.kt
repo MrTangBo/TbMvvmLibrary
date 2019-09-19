@@ -233,7 +233,7 @@ fun Context.tbRequestPermission(
 }
 
 /*app详细信息*/
-fun Any.tbApkInfo(): TbApkInfo? {
+fun Any.tbApkInfo(): TbApkInfo {
     val mActivity = TbApplication.mApplicationContext
     val apkInfo = TbApkInfo()
     val packageManager = mActivity.packageManager

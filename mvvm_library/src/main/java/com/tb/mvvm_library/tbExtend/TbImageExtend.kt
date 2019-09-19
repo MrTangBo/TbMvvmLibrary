@@ -41,7 +41,7 @@ import java.util.*
  *@描述：自定义扩展方法
  */
 //常规的加载
-@BindingAdapter("imageUrl", "tb_scaleType", requireAll = false)
+@BindingAdapter("imageUrl", "tb_scaleType")
 fun ImageView.showImage(imageUrl: String, scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP) {
     GlideUtil.getInstance().showImage(this.context, imageUrl, this, scaleType)
 }

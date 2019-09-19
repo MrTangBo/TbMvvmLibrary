@@ -46,4 +46,5 @@ abstract class BaseRecyclerAdapter(var listData: ArrayList<*>, @LayoutRes var la
         var itemBinding: ViewDataBinding = mItemBinding
     }
 
+
 }

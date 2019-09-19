@@ -74,15 +74,16 @@ class TbBottomNavigation : RadioGroup {
         unSelectDrawables: ArrayList<Int>? = null,
         selectDrawables: ArrayList<Int>? = null,
         mViewPager: ViewPager? = null,
-        mdefaultCheckPosition: Int = 0//默认选中
+        mDefaultCheckPosition: Int = 0//默认选中
     ): TbBottomNavigation {
         titles.forEachIndexed { index, s ->
             var unSelectDrawable: Drawable? = null
             var selectDrawable: Drawable? = null
             val radioButton: RadioButton =
                 LayoutInflater.from(context).inflate(R.layout.item_radio_button, this, false) as RadioButton
+            radioButton.tag=index
             val params = radioButton.layoutParams
-            if (titles.size >= 3 && titles.size % 2 != 0 && mIsCenterBulge && index == (titles.size - 1) / 2 ) {
+            if (titles.size >= 3 && titles.size % 2 != 0 && mIsCenterBulge && index == (titles.size - 1) / 2) {
                 params.height = mCenterHeight
             }
             radioButton.text = s
@@ -132,7 +133,7 @@ class TbBottomNavigation : RadioGroup {
             addView(radioButton, params)
         }
         /*初始化第一个选中*/
-        val firstView: View = getChildAt(mdefaultCheckPosition)
+        val firstView: View = getChildAt(mDefaultCheckPosition)
         firstView.performClick()
         if (mViewPager == null) return this
         mViewPager.tbOnPageLisener(onPageSelected =

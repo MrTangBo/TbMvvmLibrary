@@ -34,7 +34,7 @@ class ActivityManagerUtil {
         }
     }
 
-    //关闭指定的Activity
+    //关闭栈顶的Activity
     fun removeActivity(activity: Activity?) {
         if (activity != null) {
             if (mActivities!!.contains(activity)) {
@@ -51,7 +51,7 @@ class ActivityManagerUtil {
         }
     }
 
-    //将activity全部关闭掉,activityName
+    //关闭掉指定的activity,activityName
     fun clearOther(activityName: String) {
         for (activity in mActivities!!) {
             if (activity.javaClass.simpleName == activityName) {
@@ -71,6 +71,17 @@ class ActivityManagerUtil {
         val intent = Intent(context, activity)
         val cmpName = intent.resolveActivity(context.packageManager)
         return cmpName != null
+    }
+
+    /*把某个activity压入栈顶*/
+    fun pushActivtyTop(activity: Activity) {
+        mActivities?.push(activity)
+    }
+
+    //返回对象在堆栈中的位置
+    fun getActivityIndex(activity: Activity): Int {
+        if (mActivities?.search(activity) == null) return 0
+        return mActivities?.search(activity)!!
     }
 
 

@@ -48,7 +48,7 @@ class TbHeaderRecyclerView : RecyclerView {
         wrapHeaderAdapter()
     }
 
-    override fun setLayoutManager(layout: RecyclerView.LayoutManager?) {
+    override fun setLayoutManager(layout: LayoutManager?) {
         //如果要使用GridLayoutManager的话，只能使用HeaderViewGridLayoutManager。
         if (layout is GridLayoutManager && layout !is HeaderViewGridLayoutManager) {
             super.setLayoutManager(
@@ -67,12 +67,12 @@ class TbHeaderRecyclerView : RecyclerView {
         super.setAdapter(mAdapter)
     }
 
-    override fun setAdapter(adapter: RecyclerView.Adapter<*>?) {
-        mAdapter!!.setAdapter(adapter)
+    override fun setAdapter(adapter: Adapter<*>?) {
+        mAdapter!!.adapter = adapter
     }
 
-    override fun getAdapter(): RecyclerView.Adapter<*>? {
-        return mAdapter!!.getAdapter()
+    override fun getAdapter(): Adapter<*>? {
+        return mAdapter!!.adapter
     }
 
     /**
