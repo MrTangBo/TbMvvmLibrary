@@ -625,12 +625,7 @@ fun View.tbShowBadgeNum(
         .setBadgeTextSize(txSize.toFloat(), false)
         .setBadgePadding(padding.toFloat(), false)
         .setExactMode(true)
-    bb.hide(num == 0)
-    if (num >= 100) {
-        bb.badgeText = "99+"
-    } else {
-        bb.badgeText = num.toString()
-    }
+    bb.badgeNumber=num
     if (moveUpListener != null) {
         bb.setOnDragStateChangedListener { dragState, badge, targetView ->
             if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
