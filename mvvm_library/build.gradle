@@ -11,7 +11,7 @@ publish {//上传jecenter
     repoName = "TbMvvmLibrary"//仓库名字
     groupId = 'com.tb.mvvm.library'//jcenter上的路径Version Controller
     artifactId = 'mvvm-library'//项目名称
-    publishVersion = '1.0.0'//版本号
+    publishVersion = '1.0.1'//版本号
     desc = 'Android development convenience Library'//描述，不重要
     website = ''//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }
@@ -28,7 +28,7 @@ android {
             mavenDeployer {
                 pom.groupId = "com.tb.mvvm.library"
                 pom.artifactId = "mvvm-library"
-                pom.version = "1.0.3"
+                pom.version = "1.0.1"
                 repository(url: "file://localhost/" + "D:/repository")
 //                   {authentication(userName: "admin", password: "admin123")}
             }

@@ -201,8 +201,13 @@ fun Any.tbNotifyEnabled(activity: AppCompatActivity? = null, messageTx: String =
     return false
 }
 
-
-
+/*获取手机唯一表示*/
+fun Any.tbPohneOnlyNum(): String {
+    val androidID =
+        Settings.System.getString(TbApplication.mApplicationContext.contentResolver, Settings.System.ANDROID_ID)
+    val serialNumber = Build.SERIAL
+    return androidID + serialNumber
+}
 
 
 
