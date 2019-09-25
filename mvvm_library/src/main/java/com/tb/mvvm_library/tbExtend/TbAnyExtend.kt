@@ -26,6 +26,7 @@ import com.tb.mvvm_library.base.TbConfigure
 import com.tb.mvvm_library.tbDialog.TbSureDialog
 import com.tb.mvvm_library.tbShareUser.ShareUserInfoUtil
 import com.tb.mvvm_library.util.ActivityManagerUtil
+import com.tb.mvvm_library.util.LogUtils
 
 
 /**
@@ -96,9 +97,10 @@ fun Any.tbCleanAllActivity() {
 
 /*获取手机唯一标识MEID*/
 @SuppressLint("HardwareIds")
-fun Any.tbGetPhoneOnlyNum(context: Context): String {
-    val androidID = Settings.System.getString(context.contentResolver, Settings.System.ANDROID_ID)
-    val serialNumber = android.os.Build.SERIAL
+fun Any.tbGetPhoneOnlyNum(): String {
+    val androidID =
+        Settings.System.getString(TbApplication.mApplicationContext.contentResolver, Settings.System.ANDROID_ID)
+    val serialNumber = Build.SERIAL
     val id = androidID + serialNumber
     return id.tb2Md5()
 }
@@ -200,13 +202,14 @@ fun Any.tbNotifyEnabled(activity: AppCompatActivity? = null, messageTx: String =
     }
     return false
 }
-
-/*获取手机唯一表示*/
-fun Any.tbPohneOnlyNum(): String {
-    val androidID =
-        Settings.System.getString(TbApplication.mApplicationContext.contentResolver, Settings.System.ANDROID_ID)
-    val serialNumber = Build.SERIAL
-    return androidID + serialNumber
+/*获取手机分辨率*/
+fun tbGetPhoneSize(): IntArray {
+    val intArray = IntArray(2)
+    val ds = TbApplication.mApplicationContext.resources.displayMetrics
+    intArray[0] = ds.widthPixels
+    intArray[1] = ds.heightPixels
+    LogUtils.log("width--->${ds.widthPixels},height--->${ds.heightPixels}")
+    return intArray
 }
 
 

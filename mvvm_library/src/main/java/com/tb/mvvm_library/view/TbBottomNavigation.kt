@@ -76,35 +76,45 @@ class TbBottomNavigation : RadioGroup {
         mViewPager: ViewPager? = null,
         mDefaultCheckPosition: Int = 0//默认选中
     ): TbBottomNavigation {
+
+        val unSelectList = arrayListOf<Drawable>()
+        val selectList = arrayListOf<Drawable>()
+
+        unSelectDrawables?.forEachIndexed { index, i ->
+            val drawable = ContextCompat.getDrawable(context, i)
+            val drawable_s = ContextCompat.getDrawable(context, selectDrawables!![index])
+            drawable?.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            drawable_s?.setBounds(0, 0, drawable_s.minimumWidth, drawable_s.minimumHeight)
+            selectList.add(drawable_s!!)
+            unSelectList.add(drawable!!)
+        }
+
         titles.forEachIndexed { index, s ->
-            var unSelectDrawable: Drawable? = null
-            var selectDrawable: Drawable? = null
             val radioButton: RadioButton =
                 LayoutInflater.from(context).inflate(R.layout.item_radio_button, this, false) as RadioButton
-            radioButton.tag=index
+            radioButton.tag = index
             val params = radioButton.layoutParams
             if (titles.size >= 3 && titles.size % 2 != 0 && mIsCenterBulge && index == (titles.size - 1) / 2) {
                 params.height = mCenterHeight
             }
             radioButton.text = s
             radioButton.setTextColor(ContextCompat.getColor(context, mUnSelectTxColor))
-            if (unSelectDrawables == null || selectDrawables == null) {
+            if (unSelectList.isEmpty() || selectList.isEmpty()) {
                 radioButton.gravity = Gravity.CENTER
             } else {
-                unSelectDrawable = ContextCompat.getDrawable(context, unSelectDrawables[index])
-                unSelectDrawable?.setBounds(0, 0, unSelectDrawable.minimumWidth, unSelectDrawable.minimumHeight)
-                selectDrawable = ContextCompat.getDrawable(context, selectDrawables[index])
-                selectDrawable?.setBounds(0, 0, selectDrawable.minimumWidth, selectDrawable.minimumHeight)
+                if (unSelectList.isNotEmpty()) {
+                    radioButton.setCompoundDrawables(null, unSelectList[index], null, null)
+                }
                 radioButton.gravity = Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
             }
             radioButton.setOnClickListener {
-                forEach {
+                forEachIndexed { i, it ->
                     if (it is RadioButton) {
                         it.isChecked = false
                         it.setTextColor(ContextCompat.getColor(context, mUnSelectTxColor))
                         it.setTextSize(TypedValue.COMPLEX_UNIT_PX, mUnSelectTxSize.toFloat())
-                        if (unSelectDrawable != null) {
-                            it.setCompoundDrawables(null, unSelectDrawable, null, null)
+                        if (unSelectList.isNotEmpty()) {
+                            it.setCompoundDrawables(null, unSelectList[i], null, null)
                         }
                     } else if (it is ViewGroup) {
                         if (it.getChildAt(0) != null) {
@@ -113,8 +123,8 @@ class TbBottomNavigation : RadioGroup {
                                 view.isChecked = false
                                 view.setTextColor(ContextCompat.getColor(context, mUnSelectTxColor))
                                 view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mUnSelectTxSize.toFloat())
-                                if (unSelectDrawable != null) {
-                                    view.setCompoundDrawables(null, unSelectDrawable, null, null)
+                                if (unSelectList.isNotEmpty()) {
+                                    view.setCompoundDrawables(null, unSelectList[i], null, null)
                                 }
                             }
                         }
@@ -123,8 +133,8 @@ class TbBottomNavigation : RadioGroup {
                 radioButton.isChecked = true
                 radioButton.setTextColor(ContextCompat.getColor(context, mSelectTxColor))
                 radioButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mSelectTxSize.toFloat())
-                if (selectDrawable != null) {
-                    radioButton.setCompoundDrawables(null, selectDrawable, null, null)
+                if (selectList.isNotEmpty()) {
+                    radioButton.setCompoundDrawables(null, selectList[index], null, null)
                 }
                 if (mViewPager != null) {
                     mViewPager.currentItem = index

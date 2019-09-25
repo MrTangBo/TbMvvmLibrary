@@ -50,6 +50,8 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
     var page: Int = 1
     var mSpringView: SpringView? = null
 
+    var currentTaskId = -1
+
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     open fun onAny() {
     }
@@ -103,6 +105,7 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
         taskId: Int,
         flowables: ArrayList<Flowable<*>> = arrayListOf()
     ) {
+        currentTaskId = taskId
         if (flowable != null && flowables.isEmpty()) {
             flowables.add(flowable)
             requestParamsList.add(requestParams)

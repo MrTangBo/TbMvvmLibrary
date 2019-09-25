@@ -64,13 +64,19 @@ import q.rorbin.badgeview.QBadgeView
  */
 
 /*时间倒计时*/
-fun TextView.tbCountDownTime(mHander: Handler): TextView {
+fun TextView.tbCountDownTime(
+    mHander: Handler,
+    unableBg: Int = 0,
+    enableBg: Int = 0,
+    unableTxColor: Int = R.color.tb_text_dark,
+    enableTxColor: Int = R.color.tb_text_black
+): TextView {
     val mContext = this.context
     var totalTime = 60
     val view = this
     view.isEnabled = false
-    view.background = ContextCompat.getDrawable(mContext, R.drawable.btn_unable)
-
+    view.background = if(unableBg==0)  null else ContextCompat.getDrawable(mContext, unableBg)
+    view.setTextColor(ContextCompat.getColor(mContext, unableTxColor))
     mHander.post(object : Runnable {
         override fun run() {
             view.text = context?.getString(R.string.wait_second, totalTime)
@@ -83,7 +89,8 @@ fun TextView.tbCountDownTime(mHander: Handler): TextView {
             if (totalTime == 0) {
                 mHander.removeCallbacksAndMessages(null)
                 view.isEnabled = true
-                view.background = ContextCompat.getDrawable(mContext, R.drawable.btn_enable)
+                view.background = if(enableBg==0)  null else ContextCompat.getDrawable(mContext, enableBg)
+                view.setTextColor(ContextCompat.getColor(mContext, enableTxColor))
                 view.text = "获取验证码"
                 return
             }
@@ -624,8 +631,7 @@ fun View.tbShowBadgeNum(
         .setBadgeTextColor(ContextCompat.getColor(context, txColor))
         .setBadgeTextSize(txSize.toFloat(), false)
         .setBadgePadding(padding.toFloat(), false)
-        .setExactMode(true)
-    bb.badgeNumber=num
+    bb.badgeNumber = num
     if (moveUpListener != null) {
         bb.setOnDragStateChangedListener { dragState, badge, targetView ->
             if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {

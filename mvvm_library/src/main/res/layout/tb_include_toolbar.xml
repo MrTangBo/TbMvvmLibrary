@@ -5,6 +5,7 @@
     android:id="@+id/tb_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="@dimen/toolbarHeight"
     app:contentInsetStart="0dp"
     app:contentInsetStartWithNavigation="0dp"
     app:layout_collapseMode="pin"
@@ -13,12 +14,11 @@
     <FrameLayout
         android:id="@+id/tb_toolbar_f"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbarHeight"
-            android:layout_gravity="bottom"
             android:gravity="center_vertical"
             tools:ignore="UselessParent">
 
@@ -32,11 +32,10 @@
 
             <TextView
                 android:id="@+id/tb_toolbar_left_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/x50"
-                android:layout_toStartOf="@+id/right_Linear"
                 android:layout_toEndOf="@+id/backIcon"
                 android:singleLine="true"
                 android:textColor="@color/white"

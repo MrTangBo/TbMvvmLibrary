@@ -12,10 +12,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import com.tb.mvvm_library.R
-import com.tb.mvvm_library.tbExtend.init
 import com.tb.mvvm_library.tbExtend.tbGetDimensValue
 import kotlinx.android.synthetic.main.tb_include_toolbar.*
-import java.lang.reflect.AccessibleObject.setAccessible
 
 
 open class TbBaseTitleActivity : TbBaseActivity() {

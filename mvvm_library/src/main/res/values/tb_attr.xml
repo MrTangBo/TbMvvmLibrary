@@ -46,10 +46,10 @@
         <attr name="unSelectTxColor" format="color|reference" />
         <attr name="unSelectTxSize" format="dimension" />
         <attr name="selectTxColor" format="color|reference" />
-        <attr name="selectTxSize" format="color|reference" />
+        <attr name="selectTxSize" format="dimension" />
         <attr name="isCenterBulge" format="boolean" />
         <attr name="centerHeight" format="dimension" />
-        <attr name="bg" format="reference" />
+        <attr name="bg" format="color|reference" />
 
     </declare-styleable>
 

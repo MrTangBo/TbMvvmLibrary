@@ -27,6 +27,7 @@ import com.tb.mvvm_library.view.LoadingLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.system.exitProcess
 
 abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
 
@@ -139,7 +140,7 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
             exitTime = System.currentTimeMillis()
         } else {
             tbCleanAllActivity()
-            System.exit(0)
+            exitProcess(0)
         }
     }
 
