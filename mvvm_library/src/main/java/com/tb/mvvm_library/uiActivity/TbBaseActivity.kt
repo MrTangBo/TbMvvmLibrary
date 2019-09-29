@@ -141,6 +141,7 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
         {
             tbShowToast("再点一次退出应用")
             exitTime = System.currentTimeMillis()
+
         } else {
             tbCleanAllActivity()
             exitProcess(0)
