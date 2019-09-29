@@ -58,7 +58,6 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     open fun onCreate() {
-        LogUtils.log("onCreate--------》")
         EventBus.getDefault().register(this)
     }
 
@@ -145,7 +144,7 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T> onNext(t: T, taskId: Int) {
+    override  fun <T> onNext(t: T, taskId: Int) {
         liveDataList[taskId] = t as Any
     }
 

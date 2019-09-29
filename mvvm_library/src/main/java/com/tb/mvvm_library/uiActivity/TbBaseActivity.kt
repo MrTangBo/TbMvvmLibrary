@@ -125,6 +125,9 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
         tbKeyboard(false)
         ActivityManagerUtil.getInstance().removeActivity(this)
         EventBus.getDefault().unregister(this)
+        modelList.forEach {
+            it.onDestroy()
+        }
     }
 
 

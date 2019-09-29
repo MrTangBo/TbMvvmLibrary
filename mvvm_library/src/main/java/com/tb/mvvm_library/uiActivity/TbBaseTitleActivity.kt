@@ -6,12 +6,14 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import com.tb.mvvm_library.R
+import com.tb.mvvm_library.base.TbApplication
 import com.tb.mvvm_library.tbExtend.tbGetDimensValue
 import kotlinx.android.synthetic.main.tb_include_toolbar.*
 
@@ -99,18 +101,23 @@ open class TbBaseTitleActivity : TbBaseActivity() {
         menuTitles: ArrayList<*>,
         menuClick: ((position: Int, view: View) -> Unit)? = null,
         titleColor: Int = R.color.white,
-        titleSize: Int = tbGetDimensValue(R.dimen.tb_text26)
+        titleSize: Int = tbGetDimensValue(R.dimen.tb_text26),
+        clickRipple: Int = R.drawable.bg_tb_ripple
     ) {
         val paramas: LinearLayout.LayoutParams =
-            LinearLayout.LayoutParams(tbGetDimensValue(R.dimen.x88), tbGetDimensValue(R.dimen.x70))
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, tbGetDimensValue(R.dimen.x70)
+            )
         menuTitles.forEachIndexed { index, it ->
             when (it) {
                 is String -> {
                     val text = TextView(this)
                     text.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
                     text.setTextColor(ContextCompat.getColor(this, titleColor))
+                    text.background = ContextCompat.getDrawable(TbApplication.mApplicationContext, clickRipple)
                     text.text = it
                     text.gravity = Gravity.CENTER
+                    text.minWidth = tbGetDimensValue(R.dimen.x88)
                     paramas.gravity = Gravity.CENTER
                     text.layoutParams = paramas
                     mRightLinear.addView(text)
@@ -119,13 +126,10 @@ open class TbBaseTitleActivity : TbBaseActivity() {
 
                 is Int -> {
                     val image = AppCompatImageView(this)
+                    image.background = ContextCompat.getDrawable(TbApplication.mApplicationContext, clickRipple)
+                    image.scaleType = ImageView.ScaleType.CENTER_INSIDE
                     image.setImageResource(it)
-                    image.setPadding(
-                        tbGetDimensValue(R.dimen.x25),
-                        tbGetDimensValue(R.dimen.x25),
-                        tbGetDimensValue(R.dimen.x25),
-                        tbGetDimensValue(R.dimen.x25)
-                    )
+                    paramas.width = tbGetDimensValue(R.dimen.x88)
                     paramas.gravity = Gravity.CENTER
                     image.layoutParams = paramas
                     mRightLinear.addView(image)

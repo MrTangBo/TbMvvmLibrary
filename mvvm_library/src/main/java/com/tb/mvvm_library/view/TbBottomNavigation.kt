@@ -74,7 +74,8 @@ class TbBottomNavigation : RadioGroup {
         unSelectDrawables: ArrayList<Int>? = null,
         selectDrawables: ArrayList<Int>? = null,
         mViewPager: ViewPager? = null,
-        mDefaultCheckPosition: Int = 0//默认选中
+        mDefaultCheckPosition: Int = 0,//默认选中
+        pageSelect: TbItemClick = null
     ): TbBottomNavigation {
 
         val unSelectList = arrayListOf<Drawable>()
@@ -157,6 +158,7 @@ class TbBottomNavigation : RadioGroup {
                     view1.performClick()
                 }
             }
+            pageSelect?.invoke(it)
         })
         return this
     }

@@ -12,6 +12,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.tb.design.library.tbUtil.FontUtil
 import com.tb.mvvm_library.R
 import com.tb.mvvm_library.base.TbConfigure
@@ -34,7 +35,7 @@ abstract class TbBaseFragment : Fragment(), LoadDialogListener {
 
     open var baseFragmentBing: ViewDataBinding? = null
     open var modelList: ArrayList<TbBaseModel> = arrayListOf()
-    open lateinit var fActivity: Activity
+    open lateinit var fActivity: FragmentActivity
 
     open var isViewCreated = false
     open var isUIVisible = false
@@ -61,8 +62,8 @@ abstract class TbBaseFragment : Fragment(), LoadDialogListener {
         fActivity = this.activity!!
         initLoadingDialog()
         EventBus.getDefault().register(this)
+        initModel()
         Handler().postDelayed({
-            initModel()
             initView()
             isViewCreated = true
             lazy()
@@ -141,6 +142,9 @@ abstract class TbBaseFragment : Fragment(), LoadDialogListener {
         super.onDestroy()
         fActivity.tbKeyboard(false)
         EventBus.getDefault().unregister(this)
+        modelList.forEach {
+            it.onDestroy()
+        }
     }
 
     override fun onResume() {
