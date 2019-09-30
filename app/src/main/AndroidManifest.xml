@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activity.MainActivity2"
+            android:name=".activity.NavigationActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,10 +30,10 @@
             <!--android:launchMode="singleTask"-->
             <!--android:theme="@style/tb" />-->
 
-        <activity
+ <!--       <activity
             android:name=".activity.MainActivity3"
             android:launchMode="singleTask"
-            android:theme="@style/tb" />
+            android:theme="@style/tb" />-->
 
 
     </application>

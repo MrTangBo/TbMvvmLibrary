@@ -45,7 +45,6 @@ class MainActivity2 : TbBaseTitleActivity(), SpringView.OnFreshListener {
                     val size = listData.size
                     listData.addAll(listData)
                     adapter.notifyItemRangeInserted(size, listData.size)
-
                     LogUtils.log("CESHI")
                 }
             }
@@ -216,7 +215,7 @@ class TestAdapter(
 
                 itemBind.str = listData[position] as String
 
-                itemBind.tex.showImageWidthRatio(itemBind.str.toString(), tbGetDimensValue(R.dimen.x360))
+                itemBind.tex.showImage(itemBind.str.toString())
 
                 itemBind.tex.tbImageLongPress(itemBind.root.context as AppCompatActivity)
 

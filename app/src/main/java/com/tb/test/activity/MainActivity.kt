@@ -4,19 +4,22 @@ package com.tb.test.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
+import android.widget.*
+import androidx.core.view.NestedScrollingChildHelper
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.flyco.tablayout.CommonTabLayout
-import com.tb.mvvm_library.tbDialog.TbLoadingDialog
 import com.tb.mvvm_library.tbExtend.*
 import com.tb.mvvm_library.tbInterface.LoadDialogListener
 import com.tb.mvvm_library.tbZxingUtil.common.Constant.CODED_CONTENT
 import com.tb.mvvm_library.uiActivity.TbBaseTitleActivity
+import com.tb.mvvm_library.util.LogUtils
 import com.tb.test.R
 import com.tb.test.TestModle
 import com.tb.test.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import q.rorbin.badgeview.Badge
+import kotlin.collections.ArrayList
 
 class MainActivity : TbBaseTitleActivity(), LoadDialogListener {
 
@@ -24,15 +27,31 @@ class MainActivity : TbBaseTitleActivity(), LoadDialogListener {
 
     var bing: ActivityMainBinding? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         tbStatusBarInit(statusColorId = R.color.tb_green)
         rootLayoutId = R.layout.activity_main
         super.onCreate(savedInstanceState)
-        bottomN.setTitle(
+
+      val arr=  bottomN.setTitle(
             arrayListOf("首页", "我额", "发布", "你好", "设置"),
-            arrayListOf(R.drawable.icon_close, R.drawable.icon_close, R.drawable.icon_close, R.drawable.icon_close, R.drawable.icon_close)
-        ).setBadgeNumSingle(0, 30,moveUpListener = {badge, targetView ->  })
+            arrayListOf(
+                R.drawable.icon_close,
+                R.drawable.icon_close,
+                R.drawable.icon_close,
+                R.drawable.icon_close,
+                R.drawable.icon_close
+            ),arrayListOf(
+                R.drawable.icon_close,
+                R.drawable.icon_close,
+                R.drawable.icon_close,
+                R.drawable.icon_close,
+                R.drawable.icon_close
+            )
+        ).setBadgeNumList(arrayListOf(0,1,2,3,4),arrayListOf(1,20,30,40,50))
+//            .setBadgeNumSingle(0, 30, moveUpListener = { badge, targetView -> })
+
+
+
 //        initToolBar("")
 //        initMenu(
 //            arrayListOf("打印", R.drawable.tb_back_white)
@@ -97,9 +116,15 @@ class MainActivity : TbBaseTitleActivity(), LoadDialogListener {
             tbShowToast("$position")
         })
 
-        image.showImage(images[0], scaleType = ImageView.ScaleType.CENTER_INSIDE)
+        val s: ScrollView
+
+        bing?.url = "http://photocdn.sohu.com/20130925/Img387224863.jpg"
+        bing?.scaleType = ImageView.ScaleType.CENTER_CROP
+
         image.setOnClickListener {
         }
+
+
         image.tbImageLongPress(this)
 
         tx.tbShowBadgeNum(300)
@@ -131,11 +156,12 @@ class MainActivity : TbBaseTitleActivity(), LoadDialogListener {
 //            images.add("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1565247465&di=6e39ae6182849bf4fc1dc5d4ef2867ab&src=http://pic.rmb.bdstatic.com/cd2476300bbad8dfcfff1d277b79401a.jpeg")
 //            mBanner.notifyDataSetChanged()
 
-            tbStartActivity(
+//            tbStartActivity(
 //                MainActivity2::class.java,activityOptions = ActivityOptionsCompat.makeScaleUpAnimation(image,image.width/2,image.height/2,0,0).toBundle())
-                MainActivity2::class.java
-            )
+//                MainActivity2::class.java
+//            )
 
+            arr[0].hide(true)
 //            tbStartActivity(TbCaptureActivity::class.java, requestCode = 300)
 
         }
@@ -201,6 +227,7 @@ class MainActivity : TbBaseTitleActivity(), LoadDialogListener {
             }
         }
     }
+
 }
 
 

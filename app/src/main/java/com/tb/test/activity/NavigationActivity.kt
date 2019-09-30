@@ -2,19 +2,27 @@ package com.tb.test.activity
 
 import android.os.Bundle
 import com.tb.mvvm_library.tbAdapter.PageFragmentAdapter
+import com.tb.mvvm_library.tbExtend.tbGetPhoneOnlyNum
+import com.tb.mvvm_library.tbExtend.tbGetPhoneSize
+import com.tb.mvvm_library.tbExtend.tbStatusBarInit
 import com.tb.mvvm_library.uiActivity.TbBaseActivity
+import com.tb.mvvm_library.uiActivity.TbBaseTitleActivity
 import com.tb.test.R
 import kotlinx.android.synthetic.main.activity_navigation.*
 
-class NavigationActivity : TbBaseActivity() {
+class NavigationActivity : TbBaseTitleActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        tbStatusBarInit(R.color.colorAccent)
         rootLayoutId = R.layout.activity_navigation
         super.onCreate(savedInstanceState)
     }
 
     override fun initView() {
         super.initView()
+        tbGetPhoneOnlyNum()
+
+        initToolBar(bgColor = R.color.tb_green)
         mViewPager.adapter = PageFragmentAdapter(
             supportFragmentManager,
             arrayListOf(TestFragment(), TestFragment(), TestFragment(), TestFragment(), TestFragment())
@@ -30,7 +38,7 @@ class NavigationActivity : TbBaseActivity() {
             ),
             arrayListOf(
                 R.drawable.ic_delete_photo,
-                R.drawable.ic_delete_photo,
+                R.drawable.def_qq,
                 R.drawable.ic_delete_photo,
                 R.drawable.ic_delete_photo,
                 R.drawable.ic_delete_photo
