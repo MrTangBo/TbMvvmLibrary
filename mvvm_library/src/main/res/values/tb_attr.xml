@@ -61,11 +61,11 @@
         <attr name="vst_textSize" format="dimension" />
         <attr name="vst_textColor" format="color" />
         <attr name="vst_singleLine" format="boolean" />
-        <attr name="vst_textStyle" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="bold" value="1" />
-            <enum name="italic" value="2" />
-            <enum name="bold_italic" value="3" />
+        <attr name="vst_textStyle" format="enum" >
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="italic" value="2"/>
+            <enum name="bold_italic" value="3"/>
         </attr>
 
         <attr name="vst_scrollOrientation" format="enum">
@@ -83,17 +83,18 @@
     </declare-styleable>
 
 
-    <!--ArcView属性-->
+    <!--ArcView,ArcImageView属性-->
+    <attr name="arcHeight" format="dimension" />
+    <attr name="arcOrientation" format="string" />
     <declare-styleable name="ArcView">
-        <attr name="arcHeight" format="dimension" />
+        <attr name="arcHeight" />
         <attr name="bgColor" format="color" />
-        <attr name="arcOrientation" format="string" />
+        <attr name="arcOrientation" />
     </declare-styleable>
 
-    <!--ArcImageView属性-->
     <declare-styleable name="ArcImageView">
-        <attr name="arcHeight" format="dimension" />
-        <attr name="arcOrientation" format="string" />
+        <attr name="arcHeight" />
+        <attr name="arcOrientation" />
     </declare-styleable>
 
 </resources>

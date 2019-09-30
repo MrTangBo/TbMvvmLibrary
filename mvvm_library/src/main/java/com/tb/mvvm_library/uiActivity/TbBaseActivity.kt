@@ -114,9 +114,7 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
             FontUtil.replaceFont(this, TbConfigure.getInstance().fontType)
         }
         //设置为竖屏
-        if (requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
 

@@ -1,5 +1,6 @@
 package com.tb.mvvm_library.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
@@ -28,6 +29,7 @@ class ArcImageView @JvmOverloads constructor(context: Context, attrs: AttributeS
         typedArray.recycle()
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         val path = Path()
         path.moveTo(0f, 0f)

@@ -1,5 +1,6 @@
 package com.tb.mvvm_library.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
@@ -44,6 +45,7 @@ class ArcView @JvmOverloads constructor(
         mPaint.isAntiAlias = true
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
