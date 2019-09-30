@@ -14,6 +14,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import com.tb.mvvm_library.R
 import com.tb.mvvm_library.base.TbApplication
+import com.tb.mvvm_library.tbExtend.TbOnClick
 import com.tb.mvvm_library.tbExtend.tbGetDimensValue
 import kotlinx.android.synthetic.main.tb_include_toolbar.*
 
@@ -74,12 +75,17 @@ open class TbBaseTitleActivity : TbBaseActivity() {
         title: String?,
         color: Int = R.color.tb_white,
         size: Int = R.dimen.tb_text28,
-        style: Int = Typeface.NORMAL
+        style: Int = Typeface.NORMAL,
+        click: TbOnClick = null
+
     ) {
         mLeftTextView.text = title
         mLeftTextView.setTextColor(ContextCompat.getColor(mContext, color))
         mLeftTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, tbGetDimensValue(size).toFloat())
         mLeftTextView.typeface = Typeface.defaultFromStyle(style)
+        mLeftTextView.setOnClickListener {
+            click?.invoke()
+        }
     }
 
 

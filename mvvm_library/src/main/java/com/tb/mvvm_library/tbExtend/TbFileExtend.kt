@@ -47,31 +47,31 @@ fun Any.tbFileDelete(filePath: String, fileName: String): Boolean {
 /*file删除目录*/
 fun File?.tbFileDeleteDir(): Boolean {
     if (this == null) return false
-    if (!this.exists()) return false
-    if (!this.isFile) return false
-    this.listFiles()?.forEach {
+    if (!exists()) return false
+    if (isFile) return false
+    listFiles()?.forEach {
         if (it.isFile) {
             it.delete()
         } else if (it.isDirectory) {
-            tbFileDeleteDir()
+            it.tbFileDeleteDir()
         }
     }
-    return this.delete()
+    return delete()
 }
 
 /*计算某个file或者文件夹的大小*/
 fun File?.tbFileDirSize(): Long {
     if (this == null) return 0
-    if (!this.exists()) return 0
+    if (!exists()) return 0
     var size: Long = 0
-    if (this.isFile) {
-        size += this.length()
+    if (isFile) {
+        size += length()
     } else {
         this.listFiles()!!.forEach {
             size += if (it.isFile) {
                 it.length()
             } else {
-                tbFileDirSize()
+                it.tbFileDirSize()
             }
         }
     }
@@ -79,8 +79,8 @@ fun File?.tbFileDirSize(): Long {
 }
 
 /* 转换文件大小*/
-fun Long.tbFileSizeFormet(): String {
-    val df = DecimalFormat("#:00")
+fun Long.tbFileSizeFormet(pattern: String = "0.00"): String {
+    val df = DecimalFormat(pattern)
     return when {
         this < 1024 -> "${df.format(this)}B"
         this < 1048576 -> "${df.format(this / 1024)}KB"

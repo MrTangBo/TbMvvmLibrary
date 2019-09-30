@@ -61,6 +61,12 @@ fun <T> Any.tbGetShared(key: String, clazz: Class<T>, isClean: Boolean = true): 
     }
 }
 
+/*清除SharedPreferences*/
+fun tbCleanShared() {
+    val share = ShareUserInfoUtil.getInstance(true)
+    share.clear()
+}
+
 /*扩展Toast土司*/
 fun Any.tbShowToast(
     msg: String,
@@ -202,6 +208,7 @@ fun Any.tbNotifyEnabled(activity: AppCompatActivity? = null, messageTx: String =
     }
     return false
 }
+
 /*获取手机分辨率*/
 fun tbGetPhoneSize(): IntArray {
     val intArray = IntArray(2)
