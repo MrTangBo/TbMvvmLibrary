@@ -144,25 +144,17 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override  fun <T> onNext(t: T, taskId: Int) {
+    override fun <T> onNext(t: T, taskId: Int) {
         liveDataList[taskId] = t as Any
     }
 
     override fun onComplete(taskId: Int) {
-        dismissDialog()
+        dismissDialog(true)
     }
 
     override fun onError(t: Throwable?, taskId: Int) {
-        mActivity?.let {
-            it as TbBaseActivity
-            it.loadLayout?.showError()
-        }
-        mFragment?.let {
-            it as TbBaseFragment
-            it.loadLayout?.showError()
-        }
         checkThrowable(t)
-        dismissDialog()
+        dismissDialog(false)
     }
 
     private fun checkThrowable(t: Throwable?) {
@@ -180,15 +172,29 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
         }
     }
 
-    open fun dismissDialog() {
+
+    /*取消加载进度框*/
+    open fun dismissDialog(isComplete: Boolean) {
         isShowLoadDialog = true
         lodDialogListener?.dismissLoadDialog()
         mSpringView?.onFinishFreshAndLoad()
         mActivity?.let {
-            (it as TbBaseActivity).loadingDialog?.dismiss()
+            it as TbBaseActivity
+            if (isComplete) {
+                it.loadLayout?.showContent()
+            } else {
+                it.loadLayout?.showError()
+            }
+            it.loadingDialog?.dismiss()
         }
         mFragment?.let {
-            (it as TbBaseFragment).loadingDialog?.dismiss()
+            it as TbBaseFragment
+            if (isComplete) {
+                it.loadLayout?.showContent()
+            } else {
+                it.loadLayout?.showError()
+            }
+            it.loadingDialog?.dismiss()
         }
     }
 
