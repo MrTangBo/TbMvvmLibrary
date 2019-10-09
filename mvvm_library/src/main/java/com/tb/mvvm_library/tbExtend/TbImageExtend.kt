@@ -71,7 +71,7 @@ fun ArrayList<String>?.tbUpLoadImage(
             val partMap = HashMap<String, RequestBody>()
             it.forEachIndexed { index, file ->
                 val fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-                partMap[name + if (showIndex) index else "" + "\"; filename=\"" + file.name + "\""] = fileBody
+                partMap[name + if (showIndex) index else "" + "\"; filename=\"" + file.name] = fileBody
             }
             if (key == null || value == null) {
                 zipListener.zipListener(partMap)
