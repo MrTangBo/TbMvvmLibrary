@@ -220,7 +220,6 @@ fun ConvenientBanner<*>.initBanner(
 
 /*RecyclerView初始化*/
 fun RecyclerView?.init(
-    dataList: ArrayList<*>?,
     adapter: BaseRecyclerAdapter?,
     mLayoutManager: Class<*> = LinearLayoutManager::class.java,
     mSpanCount: Int = 2,
@@ -241,10 +240,6 @@ fun RecyclerView?.init(
     }
     if (adapter == null) {
         tbShowToast("适配器不能为空！")
-        return b
-    }
-    if (dataList == null) {
-        tbShowToast("数据集不能为空！")
         return b
     }
     var scrollY = 0

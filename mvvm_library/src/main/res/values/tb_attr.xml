@@ -30,12 +30,23 @@
         <attr name="rightText" format="string" />
         <attr name="rightTextColor" format="color|reference" />
         <attr name="rightTextSize" format="dimension" />
+        <attr name="rightTxPaddingEnd" format="dimension"/>
 
         <attr name="leftIconSrc" format="reference" />
-        <attr name="leftIconVisible" format="boolean" />
+        <attr name="leftIconVisible" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+
+        </attr>
 
         <attr name="rightIconSrc" format="reference" />
-        <attr name="rightIconVisible" format="boolean" />
+        <attr name="rightIconVisible" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+
+        </attr>
 
     </declare-styleable>
 
@@ -61,11 +72,11 @@
         <attr name="vst_textSize" format="dimension" />
         <attr name="vst_textColor" format="color" />
         <attr name="vst_singleLine" format="boolean" />
-        <attr name="vst_textStyle" format="enum" >
-            <enum name="normal" value="0"/>
-            <enum name="bold" value="1"/>
-            <enum name="italic" value="2"/>
-            <enum name="bold_italic" value="3"/>
+        <attr name="vst_textStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+            <enum name="bold_italic" value="3" />
         </attr>
 
         <attr name="vst_scrollOrientation" format="enum">

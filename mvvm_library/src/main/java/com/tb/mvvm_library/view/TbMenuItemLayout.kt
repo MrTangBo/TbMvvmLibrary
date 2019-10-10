@@ -36,10 +36,9 @@ class TbMenuItemLayout @JvmOverloads constructor(
     private var defaultRightTextSize = tbGetDimensValue(R.dimen.x24)
 
     private var defaultLeftIconSrc = R.drawable.icon_close
-    private var defaultLeftIconVisible = true
+
 
     private var defaultRightIconSrc = R.drawable.icon_next_dark
-    private var defaultRightIconVisible = true
 
     var itemClick: TbOnClick = null
 
@@ -75,11 +74,19 @@ class TbMenuItemLayout @JvmOverloads constructor(
             TypedValue.COMPLEX_UNIT_PX,
             typeArray.getDimension(R.styleable.TbMenuItemLayout_leftTextSize, defaultLeftTextSize.toFloat())
         )
-        bind.leftIcon.visibility = if (typeArray.getBoolean(
-                R.styleable.TbMenuItemLayout_leftIconVisible,
-                defaultLeftIconVisible
-            )
-        ) View.VISIBLE else View.GONE
+
+        when (typeArray.getInt(R.styleable.TbMenuItemLayout_leftIconVisible, 0)) {
+            0 -> {
+                bind.leftIcon.visibility = View.VISIBLE
+            }
+            1 -> {
+                bind.leftIcon.visibility = View.INVISIBLE
+            }
+            2 -> {
+                bind.leftIcon.visibility = View.GONE
+            }
+        }
+
         bind.leftIcon.setImageResource(
             typeArray.getResourceId(
                 R.styleable.TbMenuItemLayout_leftIconSrc,
@@ -88,6 +95,15 @@ class TbMenuItemLayout @JvmOverloads constructor(
         )
 
         bind.rightTx.text = typeArray.getString(R.styleable.TbMenuItemLayout_rightText)
+        bind.rightTx.setPadding(
+            0,
+            0,
+            (typeArray.getDimension(
+                R.styleable.TbMenuItemLayout_rightTxPaddingEnd,
+                tbGetDimensValue(R.dimen.x60).toFloat()
+            )).toInt(),
+            0
+        )
         bind.rightTx.setTextColor(
             typeArray.getColor(
                 R.styleable.TbMenuItemLayout_rightTextColor,
@@ -98,11 +114,20 @@ class TbMenuItemLayout @JvmOverloads constructor(
             TypedValue.COMPLEX_UNIT_PX,
             typeArray.getDimension(R.styleable.TbMenuItemLayout_rightTextSize, defaultRightTextSize.toFloat())
         )
-        bind.rightIcon.visibility = if (typeArray.getBoolean(
-                R.styleable.TbMenuItemLayout_rightIconVisible,
-                defaultRightIconVisible
-            )
-        ) View.VISIBLE else View.GONE
+
+        when (typeArray.getInt(R.styleable.TbMenuItemLayout_rightIconVisible, 0)) {
+            0 -> {
+                bind.rightIcon.visibility = View.VISIBLE
+            }
+            1 -> {
+                bind.rightIcon.visibility = View.INVISIBLE
+            }
+            2 -> {
+                bind.rightIcon.visibility = View.GONE
+            }
+        }
+
+
         bind.rightIcon.setImageResource(
             typeArray.getResourceId(
                 R.styleable.TbMenuItemLayout_rightIconSrc,

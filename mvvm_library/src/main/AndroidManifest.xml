@@ -44,6 +44,7 @@
             android:name="android.max_aspect"
             android:value="2.1" />
 
+
         <!--权限处理界面-->
         <activity
             android:name=".hipermission.PermissionActivity"
@@ -54,6 +55,7 @@
         <activity
             android:name="com.yalantis.ucrop.PictureMultiCuttingActivity"
             android:theme="@style/cropTheme" />
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:theme="@style/cropTheme" />

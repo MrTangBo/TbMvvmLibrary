@@ -1,7 +1,11 @@
 package com.tb.mvvm_library.uiActivity
 
+import android.app.Activity
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
+import android.content.res.TypedArray
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -41,6 +45,8 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //设置为竖屏
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         window.decorView.background = ContextCompat.getDrawable(this, R.color.tb_white)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION or WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
@@ -113,10 +119,7 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
         if (TbConfigure.getInstance().fontType.isNotEmpty()) {
             FontUtil.replaceFont(this, TbConfigure.getInstance().fontType)
         }
-        //设置为竖屏
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
