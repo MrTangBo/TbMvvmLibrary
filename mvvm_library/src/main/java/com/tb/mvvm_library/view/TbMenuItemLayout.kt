@@ -11,6 +11,7 @@ import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.flyco.roundview.RoundFrameLayout
 import com.tb.mvvm_library.R
 import com.tb.mvvm_library.databinding.TbMenuItemBinding
 import com.tb.mvvm_library.tbExtend.TbOnClick
@@ -22,9 +23,12 @@ import com.tb.mvvm_library.tbExtend.tbGetDimensValue
  *@描述：常用菜单Item
  */
 
-class TbMenuItemLayout @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+class TbMenuItemLayout : RoundFrameLayout {
+
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        init(attrs)
+    }
 
     private var defaultItemBg: Int = R.drawable.bg_item_ripple
     private var defaultItemLineBg: Int = R.color.line_background
@@ -45,7 +49,7 @@ class TbMenuItemLayout @JvmOverloads constructor(
     var bind: TbMenuItemBinding =
         DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.tb_menu_item, this, true)
 
-    init {
+    private fun init(attrs: AttributeSet?) {
         bind.root.setOnClickListener {
             itemClick?.invoke()
         }

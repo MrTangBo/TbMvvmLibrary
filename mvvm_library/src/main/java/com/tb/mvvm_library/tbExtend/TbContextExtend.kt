@@ -114,7 +114,8 @@ fun Any.tbStartActivity(
     clazz: Class<*>,
     params: MutableMap<String, Serializable>? = null,
     requestCode: Int? = null,
-    activityOptions: Bundle? = ActivityOptionsCompat.makeCustomAnimation(TbApplication.mApplicationContext, R.anim.slide_right_in, R.anim.slide_left_out
+    activityOptions: Bundle? = ActivityOptionsCompat.makeCustomAnimation(
+        TbApplication.mApplicationContext, R.anim.slide_right_in, R.anim.slide_left_out
     ).toBundle()
 ) {
     if (this !is Activity && (this !is Fragment)) {
@@ -183,16 +184,13 @@ fun Context.tbStatusBarInit(
     window.navigationBarColor = ContextCompat.getColor(this, navigationBarColorId)
     val decorView = window.decorView
     when {
-        isFitWindowStatusBar -> decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         isImmersive -> decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-        isLightMode -> SystemBarUtil.statusBarLightMode(currentActivity, isFitWindowStatusBar)
-        else -> decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        else -> SystemBarUtil.statusBarLightMode(currentActivity, isFitWindowStatusBar, isLightMode)
     }
 }
 

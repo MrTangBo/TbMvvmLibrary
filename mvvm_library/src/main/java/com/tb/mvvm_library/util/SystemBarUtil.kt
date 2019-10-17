@@ -16,18 +16,27 @@ import android.view.WindowManager
 object SystemBarUtil {
 
     /*设置状态栏黑色字体图标，*/
-    fun statusBarLightMode(activity: Activity, isFitWindowStatusBar: Boolean): Int {
+    fun statusBarLightMode(activity: Activity, isFitWindowStatusBar: Boolean, isDark: Boolean = true): Int {
         var result = 0
         when {
-            MIUISetStatusBarLightMode(activity.window, true) -> result = 1
-            FlymeSetStatusBarLightMode(activity.window, true) -> result = 2
+            MIUISetStatusBarLightMode(activity.window, isDark) -> result = 1
+            FlymeSetStatusBarLightMode(activity.window, isDark) -> result = 2
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
                 if (isFitWindowStatusBar) {
-                    activity.window.decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    if (isDark){
+                        activity.window.decorView.systemUiVisibility =
+                            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    }else{
+                        activity.window.decorView.systemUiVisibility =
+                            View.SYSTEM_UI_FLAG_VISIBLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    }
                 } else {
-                    activity.window.decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_VISIBLE
+                    if (isDark){
+                        activity.window.decorView.systemUiVisibility =
+                            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_VISIBLE
+                    }else{
+                        activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                    }
                 }
                 result = 3
             }
