@@ -149,16 +149,6 @@ fun Any?.tb2Json(): String {
     return GsonUtil.getInstance().toJson(this)
 }
 
-/*json字符串转换位对象集合*/
-fun <T> String?.tb2ObjectList(): T? {
-    if (this.isNullOrEmpty()) return null
-    return if (this.startsWith("[")) {
-        GsonUtil.getInstance().fromJsonList(this, object : TypeToken<ArrayList<T>>() {}.type)
-    } else {
-        null
-    }
-}
-
 /*跳转打电话界面*/
 fun String?.tbPhoneCall() {
     TbApplication.mApplicationContext.startActivity(
