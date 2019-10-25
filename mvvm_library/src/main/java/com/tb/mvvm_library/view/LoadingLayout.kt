@@ -1,6 +1,7 @@
 package com.tb.mvvm_library.view
 
 import android.content.Context
+import android.content.IntentFilter
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.AppCompatImageView
 import com.flyco.roundview.RoundFrameLayout
 import com.flyco.roundview.RoundTextView
+import com.flyco.roundview.RoundViewDelegate
 import com.tb.mvvm_library.R
+import com.tb.mvvm_library.base.TbConfigure
 
 /**
  *@作者：tb
@@ -43,7 +46,6 @@ class LoadingLayout @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     }
 
-
     override fun onFinishInflate() {
         super.onFinishInflate()
 
@@ -60,9 +62,33 @@ class LoadingLayout @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     }
 
-    fun setUi(emptyImgId: Int = 0, errorImgId: Int = 0, emptyDescribe: String = "", errorDescribe: String = "") {
+    fun setErrorIcon(error:Int){
+        findViewById<AppCompatImageView>(R.id.errorIcon).setImageResource(error)
+    }
+
+    fun setUi(
+        emptyImgId: Int = TbConfigure.getInstance().emptyIcon,
+        errorImgId: Int = TbConfigure.getInstance().errorIcon,
+        emptyDescribe: CharSequence = "",
+        errorDescribe: CharSequence = "",
+        refreshEmpty: CharSequence = "",
+        refreshError: CharSequence = "",
+        delegate: ((text: RoundTextView) -> Unit)? = null
+    ) {
+        if (refreshEmpty.isEmpty()) {
+            findViewById<RoundTextView>(R.id.emptyText).visibility = View.GONE
+        } else {
+            delegate?.invoke(findViewById(R.id.emptyText))
+        }
+        if (refreshError.isEmpty()) {
+            findViewById<RoundTextView>(R.id.errorText).visibility = View.GONE
+        } else {
+            delegate?.invoke(findViewById(R.id.errorText))
+        }
         findViewById<TextView>(R.id.emptyDescribe).text = emptyDescribe
+        findViewById<RoundTextView>(R.id.emptyText).text = refreshEmpty
         findViewById<TextView>(R.id.errorDescribe).text = errorDescribe
+        findViewById<RoundTextView>(R.id.errorText).text = refreshError
         findViewById<AppCompatImageView>(R.id.emptyIcon).setImageResource(emptyImgId)
         findViewById<AppCompatImageView>(R.id.errorIcon).setImageResource(errorImgId)
     }

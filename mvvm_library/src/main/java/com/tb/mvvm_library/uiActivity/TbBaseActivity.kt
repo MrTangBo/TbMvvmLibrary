@@ -1,13 +1,8 @@
 package com.tb.mvvm_library.uiActivity
 
-import android.app.Activity
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.content.res.Configuration
-import android.content.res.TypedArray
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.LayoutRes
@@ -21,10 +16,7 @@ import com.tb.mvvm_library.base.TbConfigure
 import com.tb.mvvm_library.base.TbEventBusInfo
 import com.tb.mvvm_library.model.TbBaseModel
 import com.tb.mvvm_library.tbDialog.TbLoadingDialog
-import com.tb.mvvm_library.tbExtend.tbAddActivity
-import com.tb.mvvm_library.tbExtend.tbCleanAllActivity
-import com.tb.mvvm_library.tbExtend.tbKeyboard
-import com.tb.mvvm_library.tbExtend.tbShowToast
+import com.tb.mvvm_library.tbExtend.*
 import com.tb.mvvm_library.tbInterface.LoadDialogListener
 import com.tb.mvvm_library.util.ActivityManagerUtil
 import com.tb.mvvm_library.view.LoadingLayout
@@ -88,7 +80,9 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
         modelList.forEach {
             lifecycle.addObserver(it)
             it.mActivity = this
+            it.mBinding=baseActivityBing
             it.lodDialogListener = this
+            it.initModel()
         }
     }
 
@@ -111,7 +105,7 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
     }
 
     open fun onClick(view: View?) {
-
+        if (tbIsMultiClick())return
     }
 
     override fun onResume() {

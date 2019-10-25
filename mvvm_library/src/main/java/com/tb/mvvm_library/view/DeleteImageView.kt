@@ -80,8 +80,9 @@ class DeleteImageView : RoundRelativeLayout {
         return this
     }
 
-    fun setImgResId(resId: Int): DeleteImageView {
+    fun setImgResId(resId: Int, scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP): DeleteImageView {
         val image: RoundedImageView = getChildAt(0) as RoundedImageView
+        image.scaleType = scaleType
         image.setImageResource(resId)
         return this
     }

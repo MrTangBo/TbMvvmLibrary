@@ -48,7 +48,7 @@ fun ImageView.showImage(imageUrl: String, scaleType: ImageView.ScaleType = Image
 
 /*上传图片到自己的服务器*/
 @SuppressLint("CheckResult")
-fun ArrayList<String>?.tbUpLoadImage(
+fun List<String>?.tbUpLoadImage(
     name: String = "file",
     zipListener: PictureZipListener,
     key: Array<String>? = null,

@@ -2,6 +2,7 @@ package com.tb.mvvm_library.base
 
 import android.content.Context
 import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,29 @@ class TbConfigure {
     @DrawableRes
     var toastBg: Int = R.drawable.tb_bg_toast//toast 背景
     var requestMaxNum: Int = 5//同时请求最大数
+
+
+    var emptyIcon: Int = R.drawable.icon_empty_data //空数据图标
+
+    var noInternetIcon: Int = 0//无网络图标
+
+    var errorIcon: Int = 0//加载出错图标
+
+
+    fun setEmptyIcon(emptyIcon: Int): TbConfigure {
+        this.emptyIcon = emptyIcon
+        return this
+    }
+
+    fun setNoInternetIcon(noInternetIcon: Int): TbConfigure {
+        this.noInternetIcon = noInternetIcon
+        return this
+    }
+
+    fun setErrorIcon(errorIcon: Int): TbConfigure {
+        this.errorIcon = errorIcon
+        return this
+    }
 
     companion object {
         fun getInstance() = Holder.instance

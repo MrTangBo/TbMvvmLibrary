@@ -48,6 +48,7 @@ fun Context.tbKeyboard(isOpen: Boolean = false) {
             Handler().postDelayed({
                 val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
+
             }, 500)
         } else {
             try {

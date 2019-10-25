@@ -78,7 +78,7 @@ open class TbBaseTitleFragment : TbBaseFragment() {
 
     /*设置左边Title*/
     open fun setTitleLeft(
-        title: String?,
+        title: CharSequence?,
         color: Int = R.color.tb_white,
         size: Int = R.dimen.tb_text28,
         style: Int = Typeface.NORMAL,
@@ -95,7 +95,7 @@ open class TbBaseTitleFragment : TbBaseFragment() {
 
     /*设置中间的Title*/
     open fun setTitleCenter(
-        title: String = "",
+        title: CharSequence = "",
         color: Int = R.color.tb_white,
         size: Int = R.dimen.toolbarCenterTextSize,
         style: Int = Typeface.NORMAL

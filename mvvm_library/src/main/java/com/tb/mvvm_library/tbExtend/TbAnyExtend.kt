@@ -69,7 +69,7 @@ fun tbCleanShared() {
 
 /*扩展Toast土司*/
 fun Any.tbShowToast(
-    msg: String,
+    msg: CharSequence,
     gravity: Int = Gravity.BOTTOM,
     @DrawableRes background: Int = TbConfigure.getInstance().toastBg,
     @LayoutRes layoutId: Int = TbConfigure.getInstance().toastLayoutId
@@ -210,7 +210,7 @@ fun Any.tbNotifyEnabled(activity: AppCompatActivity? = null, messageTx: String =
 }
 
 /*获取手机分辨率*/
-fun tbGetPhoneSize(): IntArray {
+fun Any.tbGetPhoneSize(): IntArray {
     val intArray = IntArray(2)
     val ds = TbApplication.mApplicationContext.resources.displayMetrics
     intArray[0] = ds.widthPixels
@@ -219,7 +219,17 @@ fun tbGetPhoneSize(): IntArray {
     return intArray
 }
 
-
+/*是否连点*/
+var lastClickTime = 0L
+fun Any.tbIsMultiClick(spanTime: Long = 1000): Boolean {
+    val currentTime = System.currentTimeMillis()
+    return if (currentTime - lastClickTime > spanTime) {
+        lastClickTime = currentTime
+        false
+    } else {
+        true
+    }
+}
 
 
 

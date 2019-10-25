@@ -65,5 +65,10 @@
             android:name=".tbZxingUtil.android.TbCaptureActivity"
             android:theme="@style/cropTheme" />
 
+        <!--查看大图界面-->
+        <activity
+            android:name=".uiActivity.TbShowBigActivity"
+            android:theme="@style/cropTheme" />
+
     </application>
 </manifest>

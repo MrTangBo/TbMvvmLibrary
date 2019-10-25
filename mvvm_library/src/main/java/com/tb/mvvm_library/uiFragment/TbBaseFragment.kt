@@ -1,10 +1,7 @@
 package com.tb.mvvm_library.uiFragment
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +16,10 @@ import com.tb.mvvm_library.base.TbConfigure
 import com.tb.mvvm_library.base.TbEventBusInfo
 import com.tb.mvvm_library.model.TbBaseModel
 import com.tb.mvvm_library.tbDialog.TbLoadingDialog
+import com.tb.mvvm_library.tbExtend.tbIsMultiClick
 import com.tb.mvvm_library.tbExtend.tbKeyboard
 import com.tb.mvvm_library.tbInterface.LoadDialogListener
+import com.tb.mvvm_library.uiActivity.TbBaseActivity
 import com.tb.mvvm_library.view.LoadingLayout
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -93,9 +92,11 @@ abstract class TbBaseFragment : Fragment(), LoadDialogListener {
         addModel()
         modelList.forEach {
             lifecycle.addObserver(it)
-            it.mActivity = fActivity
+            it.mActivity = fActivity as TbBaseActivity
             it.mFragment = this
+            it.mBinding = baseFragmentBing
             it.lodDialogListener = this
+            it.initModel()
         }
     }
 
@@ -135,7 +136,7 @@ abstract class TbBaseFragment : Fragment(), LoadDialogListener {
     }
 
     open fun onClick(view: View?) {
-
+        if (tbIsMultiClick())return
     }
 
     override fun onDestroy() {

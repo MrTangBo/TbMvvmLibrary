@@ -143,7 +143,7 @@ class TbMenuItemLayout : RoundFrameLayout {
 
 
     fun setLeftTx(
-        str: String
+        str: CharSequence
     ): TbMenuItemLayout {
         bind.leftTx.text = str
         return this
@@ -165,7 +165,7 @@ class TbMenuItemLayout : RoundFrameLayout {
 
 
     fun setRightTx(
-        str: String,
+        str: CharSequence,
         textSize: Int = defaultRightTextSize,
         textColor: Int = defaultRightTextColor
     ): TbMenuItemLayout {

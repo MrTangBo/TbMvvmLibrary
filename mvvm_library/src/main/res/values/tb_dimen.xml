@@ -16,7 +16,7 @@
 
 
     <dimen name="toolbarHeight">@dimen/x98</dimen>
-    <dimen name="toolbarCenterTextSize">@dimen/x34</dimen>
+    <dimen name="toolbarCenterTextSize">@dimen/x32</dimen>
     <dimen name="toolbarLeftTextSize">@dimen/x30</dimen>
 
 

@@ -9,6 +9,8 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import android.os.Handler
+import android.text.Layout
+import android.text.StaticLayout
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -29,6 +31,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginEnd
+import androidx.core.view.marginLeft
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
@@ -39,6 +43,8 @@ import androidx.viewpager.widget.ViewPager
 import com.bigkoo.convenientbanner.ConvenientBanner
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator
 import com.bigkoo.convenientbanner.listener.OnPageChangeListener
+import com.flyco.roundview.RoundTextView
+import com.flyco.roundview.RoundViewDelegate
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.google.android.material.appbar.AppBarLayout
@@ -53,6 +59,7 @@ import com.tb.mvvm_library.base.TbConfigure
 import com.tb.mvvm_library.tbAdapter.BaseRecyclerAdapter
 import com.tb.mvvm_library.tbInterface.WebViewListener
 import com.tb.mvvm_library.util.LogUtils
+import com.tb.mvvm_library.util.SpanUtils
 import com.tb.mvvm_library.view.*
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
@@ -75,7 +82,7 @@ fun TextView.tbCountDownTime(
     var totalTime = 60
     val view = this
     view.isEnabled = false
-    view.background = if(unableBg==0)  null else ContextCompat.getDrawable(mContext, unableBg)
+    view.background = if (unableBg == 0) null else ContextCompat.getDrawable(mContext, unableBg)
     view.setTextColor(ContextCompat.getColor(mContext, unableTxColor))
     mHander.post(object : Runnable {
         override fun run() {
@@ -89,7 +96,7 @@ fun TextView.tbCountDownTime(
             if (totalTime == 0) {
                 mHander.removeCallbacksAndMessages(null)
                 view.isEnabled = true
-                view.background = if(enableBg==0)  null else ContextCompat.getDrawable(mContext, enableBg)
+                view.background = if (enableBg == 0) null else ContextCompat.getDrawable(mContext, enableBg)
                 view.setTextColor(ContextCompat.getColor(mContext, enableTxColor))
                 view.text = "获取验证码"
                 return
@@ -342,19 +349,30 @@ fun AppBarLayout.scrollScale(targetHeight: Float, scaleValue: ((scaleValue: Floa
 fun LoadingLayout?.initLoadingLayout(
     errorClick: TbOnClick = null,
     emptyClick: TbOnClick = null,
-    emptyImgId: Int = R.drawable.icon_empty_data,
-    errorImgId: Int = 0,
-    emptyDescribe: String = "暂无数据",
-    errorDescribe: String = "连接出错！",
+    emptyImgId: Int = TbConfigure.getInstance().emptyIcon,
+    errorImgId: Int = TbConfigure.getInstance().errorIcon,
+    emptyDescribe: CharSequence = "暂无数据",
+    errorDescribe: CharSequence = "连接出错！",
+    refreshEmpty: CharSequence = "",
+    refreshError: CharSequence = "",
+    delegate: ((text: RoundTextView) -> Unit)? = null,
     @LayoutRes loadingLayId: Int = R.layout.tb_include_loading,
     @LayoutRes emptyLayId: Int = 0,
     @LayoutRes errorLayId: Int = 0
 ): LoadingLayout {
-
     if (emptyLayId != 0) {
         this?.setEmptyView(emptyLayId)
     } else {
-        this?.setUi(emptyImgId, errorImgId, emptyDescribe, errorDescribe)
+        this?.setUi(
+            emptyImgId,
+            errorImgId,
+            emptyDescribe,
+            errorDescribe,
+            refreshEmpty,
+            refreshError,
+            delegate = { text ->
+                delegate?.invoke(text)
+            })
         this?.emptyClick = { view ->
             emptyClick?.invoke()
         }
@@ -396,7 +414,7 @@ fun ViewPager.tbOnPageLisener(
 /*初始化SearchView*/
 fun SearchView.init(
     textColor: Int = R.color.tb_text_black,
-    textHitStr: String = "搜索",
+    textHitStr: CharSequence = "搜索",
     textHitColor: Int = R.color.tb_text_dark,
     getViews: ((mSearchButton: ImageView, mCloseButton: ImageView, mCollapsedButton: ImageView, mSearchAutoComplete: SearchView.SearchAutoComplete) -> Unit)? = null,
     textSize: Int = tbGetDimensValue(R.dimen.tb_text28),
@@ -637,5 +655,59 @@ fun View.tbShowBadgeNum(
     return bb
 }
 
+/*初始化查看更多文本*/
+fun TextView.initLookAll(
+    maxLine: Int = 4,
+    color: Int = R.color.orange,
+    icons: ArrayList<Int> = arrayListOf(
+        R.drawable.icon_down_orange,
+        R.drawable.icon_up_orange
+    )
+) {
+    var isExpand = false
+    //获取内容
+    val content = StringBuffer()
+    for (i in text.toString().indices) {
+        if ((text.toString()[i] in 'a'..'z') || (text.toString()[i] in 'A'..'Z') || Character.isDigit(text.toString()[i])) {
+            content.append("${text.toString()[i]} ")
+        } else {
+            content.append("${text.toString()[i]}")
+        }
+    }
+    //获取TextView的画笔对象
+    val paint = paint
+    //每行文本的布局宽度
+    val width = (parent as ViewGroup).measuredWidth - paddingStart - paddingEnd - marginLeft - marginEnd
+    //实例化StaticLayout 传入相应参数
+    val staticLayout = StaticLayout(content, paint, width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0f, false)
+    if (staticLayout.lineCount > maxLine) {
+        //定义收缩后的文本内容
+        val index = staticLayout.getLineStart(maxLine) - 1
+        val strclose = content.substring(0, index - 5)
+        //定义展开后的文本内容
+        val indexEnd = staticLayout.getLineStart(staticLayout.lineCount) - 1
+        val strExpand = content.substring(0, indexEnd - 1)
+        SpanUtils.with(this).append(strclose)
+            .append("...查看全部")
+            .setForegroundColor(ContextCompat.getColor(context, color))
+            .appendImage(icons[0], SpanUtils.ALIGN_CENTER).create()
+        setOnClickListener {
+            if (isExpand) {
+                isExpand = false
+                SpanUtils.with(this).append(strclose)
+                    .append("...查看全部")
+                    .setForegroundColor(ContextCompat.getColor(context, color))
+                    .appendImage(icons[0], SpanUtils.ALIGN_CENTER).create()
 
-
+            } else {
+                isExpand = true
+                SpanUtils.with(this).append(strExpand)
+                    .append("\t\t收起")
+                    .setForegroundColor(ContextCompat.getColor(context, color))
+                    .appendImage(icons[1], SpanUtils.ALIGN_CENTER).create()
+            }
+        }
+    } else {
+        text = content
+    }
+}

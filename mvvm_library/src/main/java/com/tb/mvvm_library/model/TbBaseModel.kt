@@ -1,12 +1,11 @@
 package com.tb.mvvm_library.model
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.google.gson.JsonSyntaxException
 import com.liaoinstan.springview.widget.SpringView
+import com.tb.mvvm_library.base.TbConfigure
 import com.tb.mvvm_library.base.TbEventBusInfo
 import com.tb.mvvm_library.httpUtil.HttpUtil
 import com.tb.mvvm_library.httpUtil.RequestListener
@@ -42,8 +41,9 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
 
     private var subscription: Subscription? = null
 
-    var mActivity: Activity? = null
-    var mFragment: Fragment? = null
+    var mActivity: Any? = null
+    var mFragment: Any? = null
+    var mBinding: ViewDataBinding? = null
 
     lateinit var eventBundle: Bundle
 
@@ -79,7 +79,19 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
         isShowLoadDialog = false
         lodDialogListener = null
         liveDataList.clear()
+        mActivity = null
+        mFragment = null
+        mBinding = null
+        requestParams.clear()
+        requestParamsList.clear()
+        lodDialogListener = null
         EventBus.getDefault().unregister(this)
+        System.gc()
+    }
+
+    /*初始化一次*/
+    open fun initModel() {
+
     }
 
     /*eventBus回调*/
@@ -179,22 +191,24 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
         lodDialogListener?.dismissLoadDialog()
         mSpringView?.onFinishFreshAndLoad()
         mActivity?.let {
-            it as TbBaseActivity
-            if (isComplete) {
-                it.loadLayout?.showContent()
-            } else {
-                it.loadLayout?.showError()
+            if (it is TbBaseActivity) {
+                if (isComplete) {
+                    it.loadLayout?.showContent()
+                } else {
+                    it.loadLayout?.showError()
+                }
+                it.loadingDialog?.dismiss()
             }
-            it.loadingDialog?.dismiss()
         }
         mFragment?.let {
-            it as TbBaseFragment
-            if (isComplete) {
-                it.loadLayout?.showContent()
-            } else {
-                it.loadLayout?.showError()
+            if (it is TbBaseFragment) {
+                if (isComplete) {
+                    it.loadLayout?.showContent()
+                } else {
+                    it.loadLayout?.showError()
+                }
+                it.loadingDialog?.dismiss()
             }
-            it.loadingDialog?.dismiss()
         }
     }
 

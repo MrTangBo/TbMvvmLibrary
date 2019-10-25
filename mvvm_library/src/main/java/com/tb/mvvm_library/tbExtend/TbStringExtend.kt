@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken
 import com.tb.mvvm_library.base.TbApplication
 import com.tb.mvvm_library.util.GsonUtil
 import java.io.UnsupportedEncodingException
+import java.lang.reflect.Type
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.SimpleDateFormat
@@ -148,6 +149,22 @@ fun Any?.tb2Json(): String {
     if (this == null) return ""
     return GsonUtil.getInstance().toJson(this)
 }
+
+/*json字符串转换为集合List*/
+fun <T> String?.tb2List(token: TypeToken<T>): T? {
+    if (this.isNullOrEmpty())  return null
+    return GsonUtil.getInstance().fromJsonList(this, token.type)
+}
+
+/**
+ * @param json json字符串
+ * @param type 转换的对象类型
+ * @return 转换的对象
+ */
+fun <T> String?.tb2List(json: String, type: Type): T {
+    return GsonUtil.getInstance().fromJsonList(json, type)
+}
+
 
 /*跳转打电话界面*/
 fun String?.tbPhoneCall() {

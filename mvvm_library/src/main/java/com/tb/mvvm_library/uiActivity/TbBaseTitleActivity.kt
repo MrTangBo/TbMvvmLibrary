@@ -37,6 +37,7 @@ open class TbBaseTitleActivity : TbBaseActivity() {
         mBackIcon = backIcon
         mSearchView = tb_toolbar_searView
         mRightLinear = right_Linear
+        initToolBar()
     }
 
     open fun initToolBar(
@@ -72,7 +73,7 @@ open class TbBaseTitleActivity : TbBaseActivity() {
 
     /*设置左边Title*/
     open fun setTitleLeft(
-        title: String?,
+        title: CharSequence?,
         color: Int = R.color.tb_white,
         size: Int = R.dimen.tb_text28,
         style: Int = Typeface.NORMAL,
@@ -91,7 +92,7 @@ open class TbBaseTitleActivity : TbBaseActivity() {
 
     /*设置中间Title*/
     open fun setTitleCenter(
-        title: String?,
+        title: CharSequence?,
         color: Int = R.color.tb_white,
         size: Int = R.dimen.toolbarCenterTextSize,
         style: Int = Typeface.NORMAL
