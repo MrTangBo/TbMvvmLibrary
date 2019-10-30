@@ -130,7 +130,7 @@ abstract class TbBaseModel : ViewModel(), LifecycleObserver, RequestListener {
             }
             HttpUtil.getInstance().startRequest(flowables, this, taskId)
         } else {
-            onComplete(taskId)
+            dismissDialog(false)
             when {
                 tbNetWorkIsWifi() -> {
                     tbShowToast("当前wifi网络不可用！")

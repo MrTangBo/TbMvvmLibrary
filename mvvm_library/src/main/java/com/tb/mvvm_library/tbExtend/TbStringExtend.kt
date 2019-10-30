@@ -126,7 +126,7 @@ fun String?.tb2Md5(isUpperCase: Boolean = false): String {
 }
 
 /*将文字时间转为毫秒类型*/
-fun String?.tbMillis2String(defaultPattern: String = "yyyy-MM-dd HH:mm:ss"): Long {
+fun String?.tbString2Millis(defaultPattern: String = "yyyy-MM-dd HH:mm:ss"): Long {
     if (this.isNullOrEmpty()) return 0
     val l = SimpleDateFormat(defaultPattern, Locale.getDefault()).parse(this) ?: return 0
     return l.time
@@ -154,15 +154,6 @@ fun Any?.tb2Json(): String {
 fun <T> String?.tb2List(token: TypeToken<T>): T? {
     if (this.isNullOrEmpty())  return null
     return GsonUtil.getInstance().fromJsonList(this, token.type)
-}
-
-/**
- * @param json json字符串
- * @param type 转换的对象类型
- * @return 转换的对象
- */
-fun <T> String?.tb2List(json: String, type: Type): T {
-    return GsonUtil.getInstance().fromJsonList(json, type)
 }
 
 

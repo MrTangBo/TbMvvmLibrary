@@ -362,28 +362,25 @@ fun LoadingLayout?.initLoadingLayout(
 ): LoadingLayout {
     if (emptyLayId != 0) {
         this?.setEmptyView(emptyLayId)
-    } else {
-        this?.setUi(
-            emptyImgId,
-            errorImgId,
-            emptyDescribe,
-            errorDescribe,
-            refreshEmpty,
-            refreshError,
-            delegate = { text ->
-                delegate?.invoke(text)
-            })
-        this?.emptyClick = { view ->
-            emptyClick?.invoke()
-        }
     }
     if (errorLayId != 0) {
         this?.setErrorView(errorLayId)
-    } else {
-        this?.setUi(emptyImgId, errorImgId, emptyDescribe, errorDescribe)
-        this?.errorClick = { view ->
-            errorClick?.invoke()
-        }
+    }
+    this?.setUi(
+        emptyImgId,
+        errorImgId,
+        emptyDescribe,
+        errorDescribe,
+        refreshEmpty,
+        refreshError,
+        delegate = { text ->
+            delegate?.invoke(text)
+        })
+    this?.errorClick = { view ->
+        errorClick?.invoke()
+    }
+    this?.emptyClick = { view ->
+        emptyClick?.invoke()
     }
     this?.setLoadingView(loadingLayId)
 

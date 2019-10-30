@@ -30,7 +30,6 @@ class GlideUtil {
     /*可以单独设置默认加载和错误图*/
     private var placeholder: Int = TbConfigure.getInstance().placeholder
     private var error: Int = TbConfigure.getInstance().error
-    private var isCacheImage: Boolean = true//是否开启缓存
 
     companion object {
         fun getInstance() = Holder.instance
@@ -52,23 +51,19 @@ class GlideUtil {
         return this
     }
 
-    /*是否缓存图片*/
-    fun isCacheImage(isCacheImage: Boolean): GlideUtil {
-        getInstance().isCacheImage = isCacheImage
-        return this
-    }
 
     //常规的加载
     fun showImage(
         mContext: Context,
         url: String,
         imageView: ImageView,
-        scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP
+        scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP,
+        isCacheImage: Boolean = true //是否缓存图片
     ) {
         imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
         Glide.with(mContext)
             .load(url)
-            .apply(getOptions())
+            .apply(getOptions(isCacheImage))
             .transition(DrawableTransitionOptions.withCrossFade())
             .thumbnail(0.1f)
             .into(object : DrawableImageViewTarget(imageView) {
@@ -80,13 +75,13 @@ class GlideUtil {
             })
     }
 
-    private fun getOptions(): RequestOptions {
+    private fun getOptions(isCacheImage: Boolean): RequestOptions {
         return RequestOptions()
             .placeholder(placeholder)//加载默认图
             .error(error)//加载失败图
             .diskCacheStrategy(if (isCacheImage) DiskCacheStrategy.ALL else DiskCacheStrategy.NONE)//缓存所有
             .priority(Priority.HIGH)//设置图片加载的优先级
-            .skipMemoryCache(false)//是否跳过内存缓存
+            .skipMemoryCache(!isCacheImage)//是否跳过内存缓存
     }
 
     /*清理缓存*/

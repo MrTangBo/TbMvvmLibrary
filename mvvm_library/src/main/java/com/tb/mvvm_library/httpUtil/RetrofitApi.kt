@@ -24,10 +24,11 @@ class RetrofitApi {
 
     fun <T> getInterface(
         clazz: Class<T>,
-        converterFactory: Converter.Factory = GsonConverterFactory.create(GsonUtil.getInstance().mGson)
+        converterFactory: Converter.Factory = GsonConverterFactory.create(GsonUtil.getInstance().mGson),
+        baseUrl: String = TbConfigure.getInstance().baseUrl
     ): T {
         val retrofit = Retrofit.Builder()
-            .baseUrl(TbConfigure.getInstance().baseUrl)
+            .baseUrl(baseUrl)
             .client(TbConfigure.getInstance().okHttpClient)
             .addConverterFactory(converterFactory)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

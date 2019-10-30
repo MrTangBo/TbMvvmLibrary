@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.tb.mvvm_library.R
+import com.tb.mvvm_library.tbExtend.TbOnClick
 
 /**
  *@作者：tb
@@ -27,7 +28,9 @@ class TbPopupWindow(
     @DrawableRes var drawableId: Int = R.color.transparent,//不给默认的背景，PopupWindow 点击外部和返回键无法消失
     isFocusable: Boolean = true,
     isTouchable: Boolean = true,
-    isOutsideTouchable: Boolean = true
+    isOutsideTouchable: Boolean = true,
+    dismissListener: TbOnClick = null,
+    animatorStyle: Int = 0
 ) : PopupWindow() {
     private var parms: WindowManager.LayoutParams? = null
     private var mWidth = 0
@@ -38,6 +41,9 @@ class TbPopupWindow(
     init {
         parms = mActivity.window.attributes
         setBackgroundDrawable(ContextCompat.getDrawable(mActivity, drawableId))
+        if (animatorStyle!=0){
+            animationStyle=animatorStyle
+        }
         // 设置PopupWindow的大小（宽度和高度）
         width = windowWith
         height = windowHeight
@@ -53,6 +59,7 @@ class TbPopupWindow(
         setOnDismissListener {
             parms?.alpha = 1.0f
             mActivity.window.attributes = parms
+            dismissListener?.invoke()
         }
         setTouchInterceptor { view, motionEvent ->
             if (!isOutsideTouchable()) {

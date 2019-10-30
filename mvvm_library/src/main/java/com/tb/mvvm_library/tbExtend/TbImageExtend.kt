@@ -46,6 +46,14 @@ fun ImageView.showImage(imageUrl: String, scaleType: ImageView.ScaleType = Image
     GlideUtil.getInstance().showImage(this.context, imageUrl, this, scaleType)
 }
 
+/*加载无缓存图片*/
+fun ImageView.showImageNoChche(
+    imageUrl: String,
+    scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP
+) {
+    GlideUtil.getInstance().showImage(this.context, imageUrl, this, scaleType, false)
+}
+
 /*上传图片到自己的服务器*/
 @SuppressLint("CheckResult")
 fun List<String>?.tbUpLoadImage(

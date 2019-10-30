@@ -11,6 +11,8 @@
         android:orientation="vertical"
         android:padding="@dimen/x15"
         android:showDividers="middle"
+        app:rv_strokeColor="@color/line_background"
+        app:rv_strokeWidth="@dimen/x1"
         app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="@dimen/x10">
 
