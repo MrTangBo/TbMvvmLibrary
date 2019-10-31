@@ -137,6 +137,14 @@ abstract class TbBaseFragment : Fragment(), LoadDialogListener {
 
     open fun onClick(view: View?) {
         if (tbIsMultiClick())return
+        view?.let {
+            singleClick(it)
+        }
+    }
+
+    /*单击事件，防止连点就调用这个方法*/
+    open fun singleClick(view: View){
+
     }
 
     override fun onDestroy() {

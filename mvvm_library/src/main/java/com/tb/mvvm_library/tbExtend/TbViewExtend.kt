@@ -637,7 +637,8 @@ fun View.tbShowBadgeNum(
     gravity: Int = Gravity.END or Gravity.TOP
 ): Badge {
     val bb = QBadgeView(context).bindTarget(this)
-        .setBadgeGravity(gravity).setBadgeBackgroundColor(ContextCompat.getColor(context, bgColor))
+        .setBadgeGravity(gravity)
+        .setBadgeBackgroundColor(ContextCompat.getColor(context, bgColor))
         .setBadgeTextColor(ContextCompat.getColor(context, txColor))
         .setBadgeTextSize(txSize.toFloat(), false)
         .setBadgePadding(padding.toFloat(), false)

@@ -27,7 +27,7 @@ class TbConfigure {
     var placeholder: Int = 0
     var error: Int = 0
     var maxRetries: Int = 0 //最大重连数默认3秒
-    var retryDelayMillis: Long = 10 //重连间隔默认10秒
+    var retryDelayMillis: Long = 8 //重连间隔默认8秒
     var cleanCacheName: String = "tb_clean_cache" //可以清除的缓存
     var cacheName: String = "tb_cache" //不可以清除的缓存
     var fontType: String = ""//字体样式设置（文件位于assets/fonts/my_font.ttf）
@@ -37,7 +37,7 @@ class TbConfigure {
     var toastLayoutId: Int = R.layout.tb_toast_style//toast 布局
     @DrawableRes
     var toastBg: Int = R.drawable.tb_bg_toast//toast 背景
-    var requestMaxNum: Int = 5//同时请求最大数
+    var requestMaxNum: Int = 3//同时请求最大数
 
 
     var emptyIcon: Int = R.drawable.icon_empty_data //空数据图标
