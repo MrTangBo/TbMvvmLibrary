@@ -30,7 +30,7 @@ class HttpUtil {
 
     /*请求*/
     fun startRequest(flowables: ArrayList<Flowable<*>>, requestListener: RequestListener, taskId: Int) {
-        var retryCount = TbConfigure.getInstance().requestMaxNum//当前重连次数
+        var retryCount = 0//当前重连次数
         Flowable.concat(flowables)
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())

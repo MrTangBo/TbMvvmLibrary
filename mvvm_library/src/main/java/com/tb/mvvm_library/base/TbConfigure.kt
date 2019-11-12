@@ -26,7 +26,7 @@ class TbConfigure {
     var okHttpClient: OkHttpClient = OkHttpClient.Builder().build()
     var placeholder: Int = 0
     var error: Int = 0
-    var maxRetries: Int = 0 //最大重连数默认3秒
+    var maxRetries: Int = 1 //最大重连数默认1次
     var retryDelayMillis: Long = 8 //重连间隔默认8秒
     var cleanCacheName: String = "tb_clean_cache" //可以清除的缓存
     var cacheName: String = "tb_cache" //不可以清除的缓存
