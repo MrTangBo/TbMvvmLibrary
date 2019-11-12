@@ -2,6 +2,8 @@ package com.tb.mvvm_library.tbDialog
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.tb.mvvm_library.R
 import com.tb.mvvm_library.databinding.TbSureDialogBinding
 import com.tb.mvvm_library.tbExtend.TbOnClick
@@ -24,10 +26,13 @@ open class TbSureDialog(
         setLayoutId(R.layout.tb_sure_dialog)
         setWidth(tbGetDimensValue(R.dimen.x600))
     }
+
     var sureClick: TbOnClick = null
     var cancelClick: TbOnClick = null
 
     var binding: TbSureDialogBinding? = null
+
+    var setView: ((binding: TbSureDialogBinding) -> Unit)? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,5 +53,10 @@ open class TbSureDialog(
         binding?.messageTx = messageTx
         binding?.sureTx = sureTx
         binding?.cancelTx = cancelTx
+
+        binding?.let {
+            setView?.invoke(it)
+        }
     }
+
 }

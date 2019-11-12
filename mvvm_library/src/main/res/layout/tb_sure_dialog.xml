@@ -62,7 +62,7 @@
             android:layout_marginEnd="@dimen/x20"
             android:text="@{sureTx,default=`确定`}"
             android:textColor="@color/tb_green"
-            android:textSize="@dimen/tb_text28" />
+            android:textSize="@dimen/tb_text30" />
 
         <TextView
             android:id="@+id/cancel"
@@ -74,7 +74,7 @@
             android:layout_toStartOf="@+id/sure"
             android:text="@{cancelTx,default=`取消`}"
             android:textColor="@color/tb_green"
-            android:textSize="@dimen/tb_text28" />
+            android:textSize="@dimen/tb_text30" />
 
 
     </com.flyco.roundview.RoundRelativeLayout>
