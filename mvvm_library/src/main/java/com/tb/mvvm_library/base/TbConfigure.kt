@@ -41,10 +41,12 @@ class TbConfigure {
 
 
     var emptyIcon: Int = R.drawable.icon_empty_data //空数据图标
+    var emptyDescribe: String = "暂无数据" //空数据描述
 
     var noInternetIcon: Int = 0//无网络图标
 
     var errorIcon: Int = 0//加载出错图标
+    var errorDescribe: String = "连接出错!"//加载出错描述
 
 
     fun setEmptyIcon(emptyIcon: Int): TbConfigure {
