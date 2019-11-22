@@ -16,6 +16,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import androidx.appcompat.widget.AppCompatDrawableManager
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import com.makeramen.roundedimageview.RoundedDrawable
 import com.tb.mvvm_library.base.TbApplication
@@ -143,14 +144,7 @@ fun Any.tbBitmapFromInternet(url: String): Bitmap? {
 @SuppressLint("RestrictedApi")
 fun Any.tbBitmapFromResource(resId: Int): Bitmap? {
     val drawable = AppCompatDrawableManager.get().getDrawable(TbApplication.mApplicationContext, resId)
-    val bitmap = Bitmap.createBitmap(
-        drawable.intrinsicWidth,
-        drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
-    )
-    val canvas = Canvas(bitmap)
-    drawable.setBounds(0, 0, canvas.width, canvas.height)
-    drawable.draw(canvas)
-    return bitmap
+    return drawable.toBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
 }
 
 /*获取网络视频和本地视频第一帧*/

@@ -15,10 +15,10 @@ import com.tb.mvvm_library.tbExtend.tbGetDimensValue
  *@描述：需要确认操作再次提醒
  */
 open class TbSureDialog(
-    var titleTx: String = "",
-    var messageTx: String = "",
-    var sureTx: String = "确定",
-    var cancelTx: String = "取消"
+    var titleTx: CharSequence = "",
+    var messageTx: CharSequence = "",
+    var sureTx: CharSequence = "确定",
+    var cancelTx: CharSequence = "取消"
 ) : TbBaseDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +49,15 @@ open class TbSureDialog(
 
     override fun onResume() {
         super.onResume()
-        binding?.titleTx = titleTx
-        binding?.messageTx = messageTx
-        binding?.sureTx = sureTx
-        binding?.cancelTx = cancelTx
+        if (titleTx.isEmpty()) {
+            binding?.title?.visibility = View.GONE
+        } else {
+            binding?.title?.visibility = View.VISIBLE
+        }
+        binding?.title?.text = titleTx
+        binding?.message?.text = messageTx
+        binding?.sure?.text = sureTx
+        binding?.cancel?.text = cancelTx
 
         binding?.let {
             setView?.invoke(it)
