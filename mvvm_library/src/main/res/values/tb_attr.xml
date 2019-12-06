@@ -30,7 +30,7 @@
         <attr name="rightText" format="string" />
         <attr name="rightTextColor" format="color|reference" />
         <attr name="rightTextSize" format="dimension" />
-        <attr name="rightTxPaddingEnd" format="dimension"/>
+        <attr name="rightTxPaddingEnd" format="dimension" />
 
         <attr name="leftIconSrc" format="reference" />
         <attr name="leftIconVisible" format="enum">
@@ -60,6 +60,8 @@
         <attr name="selectTxSize" format="dimension" />
         <attr name="isCenterBulge" format="boolean" />
         <attr name="centerHeight" format="dimension" />
+        <attr name="paddingTop" format="dimension" />
+        <attr name="paddingBottom" format="dimension" />
         <attr name="bg" format="color|reference" />
 
     </declare-styleable>
@@ -106,6 +108,20 @@
     <declare-styleable name="ArcImageView">
         <attr name="arcHeight" />
         <attr name="arcOrientation" />
+    </declare-styleable>
+
+
+    <!--购物车数量加减控件-->
+    <declare-styleable name="CarCountView">
+        <attr name="addIcon" format="reference" />//添加图标
+        <attr name="reduceIcon" format="reference" />//减少图标
+        <attr name="textColor" format="color" />//字体颜色
+        <attr name="textSize" format="dimension" />//字体大小
+        <attr name="iconWidth" format="dimension" />//两边图标宽度
+        <attr name="editWidth" format="dimension" />//中间数字宽度
+        <attr name="rootBg" format="reference" />//背景
+        <attr name="stockNum" format="integer" />//库存
+
     </declare-styleable>
 
 </resources>

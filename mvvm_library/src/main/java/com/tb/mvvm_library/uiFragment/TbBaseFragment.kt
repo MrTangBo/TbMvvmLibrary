@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import com.tb.mvvm_library.base.TbConfigure
 import com.tb.mvvm_library.base.TbEventBusInfo
 import com.tb.mvvm_library.model.TbBaseModel
 import com.tb.mvvm_library.tbDialog.TbLoadingDialog
+import com.tb.mvvm_library.tbExtend.initLoadingLayout
 import com.tb.mvvm_library.tbExtend.tbIsMultiClick
 import com.tb.mvvm_library.tbExtend.tbKeyboard
 import com.tb.mvvm_library.tbInterface.LoadDialogListener
@@ -132,18 +134,29 @@ abstract class TbBaseFragment : Fragment(), LoadDialogListener {
 
     }
 
+    open fun initLoadingLayout(mLoadingLayout: LoadingLayout) {
+        loadLayout = mLoadingLayout.initLoadingLayout(emptyClick = {
+            loadingDialog?.show()
+        }, errorClick = {
+            loadingDialog?.show()
+        }, delegate = { text ->
+            text.delegate.backgroundColor = ContextCompat.getColor(fActivity, R.color.tb_green)
+        }, refreshError = "刷新", refreshEmpty = "刷新数据")
+    }
+
+
     override fun dismissLoadDialog() {
     }
 
     open fun onClick(view: View?) {
-        if (tbIsMultiClick())return
+        if (tbIsMultiClick()) return
         view?.let {
             singleClick(it)
         }
     }
 
     /*单击事件，防止连点就调用这个方法*/
-    open fun singleClick(view: View){
+    open fun singleClick(view: View) {
 
     }
 

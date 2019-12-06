@@ -24,7 +24,7 @@ open class TbBaseTitleActivity : TbBaseActivity() {
     open lateinit var mCenterTextView: TextView
     open lateinit var mLeftTextView: TextView
     open lateinit var mToolbar: FrameLayout
-    open var mSearchView: SearchView? = null
+    open lateinit var mSearchView: SearchView
     open lateinit var mBackIcon: AppCompatImageView
     open lateinit var mRightLinear: LinearLayout
 

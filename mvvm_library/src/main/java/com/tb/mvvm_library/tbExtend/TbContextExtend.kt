@@ -376,6 +376,24 @@ fun tbCheckShortCutExist(mContent: Context, name: String): Boolean {
     return isInstallShortcut
 }
 
+/*dip2px*/
+fun tbDip2px(dpValue: Float): Int {
+    val scale =  TbApplication.mApplicationContext.resources.displayMetrics.density
+    return (dpValue * scale + 0.5f).toInt()
+}
+
+/*dip2px*/
+fun tbSp2px(spValue: Float): Int {
+    val scale = TbApplication.mApplicationContext.resources.displayMetrics.scaledDensity
+    return (spValue * scale + 0.5f).toInt()
+}
+
+/*px2Dp*/
+fun tbPx2dip(pxValue: Float): Int {
+    val scale =  TbApplication.mApplicationContext.resources.displayMetrics.density
+    return (pxValue / scale + 0.5f).toInt()
+}
+
 
 
 

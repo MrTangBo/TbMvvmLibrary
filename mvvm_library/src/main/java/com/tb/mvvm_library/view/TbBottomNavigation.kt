@@ -34,6 +34,8 @@ class TbBottomNavigation : RadioGroup {
     private var mIsCenterBulge: Boolean = false
     private var mCenterHeight: Int = tbGetDimensValue(R.dimen.x108)
     private var mBg: Int = R.drawable.bg_item_ripple
+    private var mPaddingTop: Int = tbGetDimensValue(R.dimen.x5)
+    private var mPaddingBottom: Int = tbGetDimensValue(R.dimen.x5)
 
     constructor(mContext: Context) : super(mContext, null)
     constructor(mContext: Context, mAttributes: AttributeSet) : super(mContext, mAttributes) {
@@ -46,22 +48,14 @@ class TbBottomNavigation : RadioGroup {
         background = ContextCompat.getDrawable(context, typeArray.getResourceId(R.styleable.TbBottomNavigation_bg, mBg))
         mUnSelectTxColor =
             typeArray.getResourceId(R.styleable.TbBottomNavigation_unSelectTxColor, R.color.tb_text_black)
-        mUnSelectTxSize = typeArray.getDimensionPixelSize(
-            R.styleable.TbBottomNavigation_unSelectTxSize,
-            tbGetDimensValue(R.dimen.tb_text28)
-        )
+        mUnSelectTxSize =
+            typeArray.getDimensionPixelSize(R.styleable.TbBottomNavigation_unSelectTxSize, mUnSelectTxSize)
         mSelectTxColor = typeArray.getResourceId(R.styleable.TbBottomNavigation_selectTxColor, R.color.tb_green)
-        mSelectTxSize = typeArray.getDimensionPixelSize(
-            R.styleable.TbBottomNavigation_selectTxSize,
-            tbGetDimensValue(R.dimen.tb_text28)
-        )
+        mSelectTxSize = typeArray.getDimensionPixelSize(R.styleable.TbBottomNavigation_selectTxSize, mSelectTxSize)
         mIsCenterBulge = typeArray.getBoolean(R.styleable.TbBottomNavigation_isCenterBulge, false)
-        mCenterHeight =
-            typeArray.getDimension(
-                R.styleable.TbBottomNavigation_centerHeight,
-                tbGetDimensValue(R.dimen.x108).toFloat()
-            )
-                .toInt()
+        mCenterHeight = typeArray.getDimensionPixelSize(R.styleable.TbBottomNavigation_centerHeight, mCenterHeight)
+        mPaddingTop = typeArray.getDimensionPixelSize(R.styleable.TbBottomNavigation_paddingTop, mPaddingTop)
+        mPaddingBottom = typeArray.getDimensionPixelSize(R.styleable.TbBottomNavigation_paddingBottom, mPaddingBottom)
         if (mIsCenterBulge) {
             clipChildren = false
             gravity = Gravity.BOTTOM
@@ -94,6 +88,7 @@ class TbBottomNavigation : RadioGroup {
             val radioButton: RadioButton =
                 LayoutInflater.from(context).inflate(R.layout.item_radio_button, this, false) as RadioButton
             radioButton.tag = index
+            radioButton.setPadding(0, mPaddingTop, 0, mPaddingBottom)
             val params = radioButton.layoutParams
             if (titles.size >= 3 && titles.size % 2 != 0 && mIsCenterBulge && index == (titles.size - 1) / 2) {
                 params.height = mCenterHeight

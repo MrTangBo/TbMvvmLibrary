@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
+import android.net.http.SslError
 import android.os.Build
 import android.os.Handler
 import android.text.Layout
@@ -16,23 +17,19 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
-import androidx.annotation.IdRes
-import androidx.annotation.IntegerRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginEnd
 import androidx.core.view.marginLeft
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,7 +41,6 @@ import com.bigkoo.convenientbanner.ConvenientBanner
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator
 import com.bigkoo.convenientbanner.listener.OnPageChangeListener
 import com.flyco.roundview.RoundTextView
-import com.flyco.roundview.RoundViewDelegate
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.google.android.material.appbar.AppBarLayout
@@ -111,13 +107,17 @@ fun TextView.tbCountDownTime(
 /*SpringView初始化*/
 fun SpringView.init(
     listener: SpringView.OnFreshListener,
-    header: BaseHeader = DefaultHeader(this.context),
-    footer: BaseFooter = DefaultFooter(this.context),
+    header: BaseHeader? = DefaultHeader(this.context),
+    footer: BaseFooter? = DefaultFooter(this.context),
     springType: SpringView.Type = SpringView.Type.OVERLAP,
     springGive: SpringView.Give = SpringView.Give.BOTH
 ): SpringView {
-    this.header = header
-    this.footer = footer
+    if (header != null) {
+        this.header = header
+    }
+    if (footer != null) {
+        this.footer = footer
+    }
     this.setListener(listener)
     this.setGive(springGive)
     this.type = springType
@@ -416,6 +416,7 @@ fun SearchView.init(
     getViews: ((mSearchButton: ImageView, mCloseButton: ImageView, mCollapsedButton: ImageView, mSearchAutoComplete: SearchView.SearchAutoComplete) -> Unit)? = null,
     textSize: Int = tbGetDimensValue(R.dimen.tb_text28),
     searchBg: Int = R.drawable.tb_bg_search,
+    searchViewHeight: Int = tbGetDimensValue(R.dimen.x70),
     @DrawableRes mSearchIcon: Int = R.drawable.icon_search_white,
     @DrawableRes mCloseIcon: Int = R.drawable.icon_close,
     @DrawableRes mCollapsedIcon: Int = R.drawable.icon_search_white,
@@ -427,6 +428,11 @@ fun SearchView.init(
     onQueryChange: ((str: String) -> Unit)? = null,//内容变化监听
     onQuerySubmit: ((str: String) -> Unit)? = null//提交监听
 ) {
+
+    val p = this.layoutParams
+    p.height = searchViewHeight
+    this.layoutParams = p
+
     visibility = View.VISIBLE
     background = ContextCompat.getDrawable(this.context, searchBg)
 
@@ -522,16 +528,19 @@ fun WebView.init(
     settings.blockNetworkImage = false//解决图片不显示
     settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 
+
     /*js调用Android*/
     js2AndroidNames.forEach {
         addJavascriptInterface(js2Android, it)
     }
-
     /*js调用Android条用js*/
-    evaluateJavascript(android2Js) {
-        android2JsCallBack?.invoke(it)
+    if (android2Js.isNotEmpty()) {
+        evaluateJavascript(android2Js) {
+            android2JsCallBack?.invoke(it)
+        }
     }
     webViewClient = object : WebViewClient() {
+
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             loadListener?.loadStart(view, url, favicon)
@@ -540,10 +549,15 @@ fun WebView.init(
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             loadListener?.loadComplete(view, url)
-            val params = layoutParams
-            params.width = context.tbGetScreenSize()[0]
-            params.height = context.tbGetScreenSize()[1]
-            layoutParams = layoutParams
+            val w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            val h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            //重新测量
+            this@init.measure(w, h)
+        }
+
+        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+            // 默认是handle.cancel()的，即遇到错误即中断
+            handler?.proceed()
         }
     }
     webChromeClient = object : WebChromeClient() {

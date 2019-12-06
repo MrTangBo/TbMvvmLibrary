@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_cat_count_view"
+    android:divider="@drawable/line_horizontal"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:showDividers="middle">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/carCountReduce"
+        android:layout_width="@dimen/x90"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/icon_car_reduce" />
+
+    <EditText
+        android:id="@+id/carCountNum"
+        android:layout_width="@dimen/x80"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:digits="0123456789"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="8"
+        android:paddingStart="@dimen/x5"
+        android:paddingEnd="@dimen/x5"
+        android:singleLine="true"
+        android:text="1"
+        android:textColor="@color/tb_text_black"
+        android:textSize="@dimen/tb_text26" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/carCountAdd"
+        android:layout_width="@dimen/x90"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/icon_car_add" />
+
+
+</LinearLayout>

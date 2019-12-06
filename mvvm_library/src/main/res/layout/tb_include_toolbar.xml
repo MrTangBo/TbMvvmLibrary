@@ -55,9 +55,9 @@
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/tb_toolbar_searView"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/x65"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/x100"
+                android:layout_toEndOf="@+id/backIcon"
                 android:layout_toStartOf="@+id/right_Linear"
                 android:maxWidth="@dimen/x720"
                 android:visibility="gone" />

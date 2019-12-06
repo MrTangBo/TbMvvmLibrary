@@ -80,7 +80,7 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
         modelList.forEach {
             lifecycle.addObserver(it)
             it.mActivity = this
-            it.mBinding=baseActivityBing
+            it.mBinding = baseActivityBing
             it.lodDialogListener = this
             it.initModel()
         }
@@ -95,6 +95,16 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
 
     }
 
+    open fun initLoadingLayout(mLoadingLayout: LoadingLayout) {
+        loadLayout = mLoadingLayout.initLoadingLayout(emptyClick = {
+            loadingDialog?.show()
+        }, errorClick = {
+            loadingDialog?.show()
+        }, delegate = { text ->
+            text.delegate.backgroundColor = ContextCompat.getColor(this, R.color.tb_green)
+        }, refreshError = "刷新", refreshEmpty = "刷新数据")
+    }
+
     /*显示加载框*/
     override fun showLoadDialog() {
 
@@ -105,14 +115,14 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
     }
 
     open fun onClick(view: View?) {
-        if (tbIsMultiClick())return
+        if (tbIsMultiClick()) return
         view?.let {
             singleClick(it)
         }
     }
 
     /*单击事件，防止连点就调用这个方法*/
-    open fun singleClick(view: View){
+    open fun singleClick(view: View) {
 
     }
 
