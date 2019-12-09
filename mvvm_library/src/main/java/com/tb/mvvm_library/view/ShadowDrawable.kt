@@ -4,7 +4,11 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.view.ViewCompat
-
+/**
+*@作者：tb
+*@时间：2019/12/9
+*@描述：阴影Drawable
+*/
 class ShadowDrawable private constructor(
     private val mShape: Int,
     private val mBgColor: IntArray?,

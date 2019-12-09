@@ -111,6 +111,7 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
     }
 
     /*取消加载进度*/
+
     override fun dismissLoadDialog() {
     }
 
