@@ -5,14 +5,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
 apply plugin: 'com.novoda.bintray-release'//上传jcenter插件
 
-
 ////添加
 publish {//上传jecenter
     userOrg = 'landiao9898'//landiao9898用户名
     repoName = "TbMvvmLibrary"//仓库名字
     groupId = 'com.tb.mvvm.library'//jcenter上的路径Version Controller
     artifactId = 'mvvm-library'//项目名称
-    publishVersion = '1.0.0'//版本号
+    publishVersion = '1.0.2'//版本号
     desc = 'Android development convenience Library'//描述，不重要
     website = 'https://github.com/MrTangBo/TbMvvmLibrary'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }

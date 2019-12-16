@@ -5,12 +5,12 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.tb.mvvm_library.R
+import com.tb.mvvm_library.base.TbApplication
 import com.tb.mvvm_library.tbExtend.tbDip2px
 import com.tb.mvvm_library.tbExtend.tbShowToast
 import com.tb.mvvm_library.tbExtend.tbSp2px
@@ -53,11 +53,11 @@ class CarCountView @JvmOverloads constructor(
         mReduceIcon = typeArray.getResourceId(R.styleable.CarCountView_reduceIcon, mReduceIcon)
         mTextColor = typeArray.getColor(R.styleable.CarCountView_textColor, resources.getColor(R.color.tb_text_black))
         mTextSize =
-            typeArray.getDimensionPixelSize(R.styleable.CarCountView_textSize, tbSp2px(mTextSize.toFloat()))
+            typeArray.getDimensionPixelSize(R.styleable.CarCountView_textSize, context.tbSp2px(mTextSize.toFloat()))
         mIconWidth =
-            typeArray.getDimensionPixelSize(R.styleable.CarCountView_iconWidth, tbDip2px(mIconWidth.toFloat()))
+            typeArray.getDimensionPixelSize(R.styleable.CarCountView_iconWidth,  context.tbDip2px(mIconWidth.toFloat()))
         mEditWidth =
-            typeArray.getDimensionPixelSize(R.styleable.CarCountView_editWidth, tbDip2px(mEditWidth.toFloat()))
+            typeArray.getDimensionPixelSize(R.styleable.CarCountView_editWidth, context. tbDip2px(mEditWidth.toFloat()))
         mBg = typeArray.getResourceId(R.styleable.CarCountView_rootBg, mBg)
         stockNum = typeArray.getInteger(R.styleable.CarCountView_stockNum, stockNum)
         typeArray.recycle()

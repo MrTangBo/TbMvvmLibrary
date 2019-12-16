@@ -3,14 +3,8 @@ package com.tb.mvvm_library.tbExtend
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
-import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -50,7 +44,8 @@ fun Any.tbGetDimensValue(dimensionId: Int): Int {
 
 /*获取屏幕尺寸IntArray[0]为宽度 IntArray[1]为高度*/
 fun Any.tbGetScreenSize(): IntArray {
-    val wm = TbApplication.mApplicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val wm =
+        TbApplication.mApplicationContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val outMetrics = DisplayMetrics()
     wm.defaultDisplay.getMetrics(outMetrics)
     return intArrayOf(outMetrics.widthPixels, outMetrics.heightPixels)
@@ -161,11 +156,18 @@ fun Any.tbStartActivity(
                 activityOptions
             )
         } else {
-            currentActivity.startActivity(Intent(currentActivity, clazz).putExtras(b), activityOptions)
+            currentActivity.startActivity(
+                Intent(currentActivity, clazz).putExtras(b),
+                activityOptions
+            )
         }
     } else {
         if (requestCode != null) {
-            currentActivity.startActivityForResult(Intent(currentActivity, clazz), requestCode, activityOptions)
+            currentActivity.startActivityForResult(
+                Intent(currentActivity, clazz),
+                requestCode,
+                activityOptions
+            )
         } else {
             currentActivity.startActivity(Intent(currentActivity, clazz), activityOptions)
         }
@@ -183,6 +185,7 @@ fun Context.tbStatusBarInit(
     statusColorId: Int = R.color.tb_green,
     navigationBarColorId: Int = R.color.tb_black,
     isImmersive: Boolean = false,
+    immersiveBottom: Boolean = true,
     isLightMode: Boolean = false,
     isFitWindowStatusBar: Boolean = false
 ) {
@@ -200,12 +203,22 @@ fun Context.tbStatusBarInit(
     window.navigationBarColor = ContextCompat.getColor(this, navigationBarColorId)
     val decorView = window.decorView
     when {
-        isImmersive -> decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        isImmersive -> {
+            if (immersiveBottom) {
+                decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+            } else {
+                decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+            }
+        }
+
         else -> SystemBarUtil.statusBarLightMode(currentActivity, isFitWindowStatusBar, isLightMode)
     }
 }
@@ -320,7 +333,11 @@ fun Activity.tbCreateDeskIcon(name: String, icon: Int) {
                         PendingIntent.FLAG_UPDATE_CURRENT
                     )
                 ShortcutManagerCompat.addDynamicShortcuts(this, arrayListOf(shortcutInfo))
-                ShortcutManagerCompat.requestPinShortcut(this, shortcutInfo, peddingIntent.intentSender)
+                ShortcutManagerCompat.requestPinShortcut(
+                    this,
+                    shortcutInfo,
+                    peddingIntent.intentSender
+                )
                 tbShowToast("添加成功！")
             }
         }
@@ -377,21 +394,31 @@ fun tbCheckShortCutExist(mContent: Context, name: String): Boolean {
 }
 
 /*dip2px*/
-fun tbDip2px(dpValue: Float): Int {
-    val scale =  TbApplication.mApplicationContext.resources.displayMetrics.density
+fun Context.tbDip2px(dpValue: Float): Int {
+    val scale = this.resources.displayMetrics.density
     return (dpValue * scale + 0.5f).toInt()
 }
 
 /*dip2px*/
-fun tbSp2px(spValue: Float): Int {
-    val scale = TbApplication.mApplicationContext.resources.displayMetrics.scaledDensity
+fun Context.tbSp2px(spValue: Float): Int {
+    val scale = this.resources.displayMetrics.scaledDensity
     return (spValue * scale + 0.5f).toInt()
 }
 
 /*px2Dp*/
-fun tbPx2dip(pxValue: Float): Int {
-    val scale =  TbApplication.mApplicationContext.resources.displayMetrics.density
+fun Context.tbPx2dip(pxValue: Float): Int {
+    val scale = this.resources.displayMetrics.density
     return (pxValue / scale + 0.5f).toInt()
+}
+
+/* Get activity from context object*/
+fun Context.tbScanForActivity(): Activity? {
+    if (this is Activity) {
+        return this
+    } else if (this is ContextWrapper) {
+        return this.baseContext.tbScanForActivity()
+    }
+    return null
 }
 
 

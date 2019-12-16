@@ -2,6 +2,7 @@ package com.tb.mvvm_library.tbExtend
 
 import android.annotation.SuppressLint
 import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -43,7 +44,9 @@ import com.bigkoo.convenientbanner.listener.OnPageChangeListener
 import com.flyco.roundview.RoundTextView
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
+import com.flyco.tablayout.listener.OnTabSelectListener
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
 import com.liaoinstan.springview.container.BaseFooter
 import com.liaoinstan.springview.container.BaseHeader
 import com.liaoinstan.springview.container.DefaultFooter
@@ -92,7 +95,8 @@ fun TextView.tbCountDownTime(
             if (totalTime == 0) {
                 mHander.removeCallbacksAndMessages(null)
                 view.isEnabled = true
-                view.background = if (enableBg == 0) null else ContextCompat.getDrawable(mContext, enableBg)
+                view.background =
+                    if (enableBg == 0) null else ContextCompat.getDrawable(mContext, enableBg)
                 view.setTextColor(ContextCompat.getColor(mContext, enableTxColor))
                 view.text = "获取验证码"
                 return
@@ -129,7 +133,8 @@ fun SpringView.init(
 fun CommonTabLayout.init(
     titles: ArrayList<String>,
     selectIcons: ArrayList<Int> = arrayListOf(),
-    unSelectIcons: ArrayList<Int> = arrayListOf()
+    unSelectIcons: ArrayList<Int> = arrayListOf(),
+    selectListener: ((position: Int) -> Unit)? = null
 ): CommonTabLayout {
     val mTabEntities = arrayListOf<CustomTabEntity>()
     titles.forEachIndexed { index, s ->
@@ -155,7 +160,113 @@ fun CommonTabLayout.init(
         mTabEntities.add(enty)
     }
     setTabData(mTabEntities)
+    setOnTabSelectListener(object : OnTabSelectListener {
+        override fun onTabSelect(position: Int) {
+            selectListener?.invoke(position)
+        }
+
+        override fun onTabReselect(position: Int) {
+
+        }
+    })
+
     return this
+}
+
+/*系统TabLoyout*/
+fun TabLayout.init(
+    context: Context,
+    titles: ArrayList<CharSequence>,
+    selectColor: Int = R.color.tb_green,
+    selectSize: Int = R.dimen.tb_text26,
+    unSelectColor: Int = R.color.tb_text_black,
+    unSelectSize: Int = R.dimen.tb_text26,
+    selectItemBg: Int = R.color.transparent,
+    unSelectItemBg: Int = R.color.transparent,
+    itemPadding: Rect = Rect(),
+    mOnTabSelected: TbItemClick = null,
+    icons: ArrayList<Int>? = null,
+    mDrawablePadding: Int = R.dimen.x5,
+    iconGravity: Int = Gravity.BOTTOM,
+    textGravity: Int = Gravity.CENTER,
+    viewPager: ViewPager? = null
+) {
+    titles.forEachIndexed { index, charSequence ->
+        val item = TextView(context)
+        item.gravity = textGravity
+        item.setTextSize(TypedValue.COMPLEX_UNIT_PX, tbGetDimensValue(unSelectSize).toFloat())
+        item.setTextColor(ContextCompat.getColor(context, unSelectColor))
+        item.background = ContextCompat.getDrawable(context, unSelectItemBg)
+        item.setPadding(itemPadding.left, itemPadding.top, itemPadding.right, itemPadding.bottom)
+        if (index == 0) {
+            item.setTextColor(ContextCompat.getColor(context, selectColor))
+            item.background = ContextCompat.getDrawable(context, selectItemBg)
+        }
+        item.text = charSequence
+
+        icons?.let {
+            val drawable = ContextCompat.getDrawable(context, it[index])!!
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            when (iconGravity) {
+                Gravity.START -> {
+                    item.setCompoundDrawables(drawable, null, null, null)
+                }
+                Gravity.TOP -> {
+                    item.setCompoundDrawables(null, drawable, null, null)
+                }
+                Gravity.END -> {
+                    item.setCompoundDrawables(null, null, drawable, null)
+                }
+                Gravity.BOTTOM -> {
+                    item.setCompoundDrawables(null, null, null, drawable)
+                }
+            }
+            item.compoundDrawablePadding = mDrawablePadding
+        }
+        addTab(this.newTab().setCustomView(item))
+    }
+
+    viewPager?.tbOnPageLisener(onPageSelected = {
+        this.getTabAt(it)?.select()
+    })
+
+    addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(p0: TabLayout.Tab?) {
+
+        }
+
+        override fun onTabUnselected(p0: TabLayout.Tab?) {
+            p0?.let {
+                it.customView.let { view ->
+                    view as TextView
+                    view.setTextSize(
+                        TypedValue.COMPLEX_UNIT_PX,
+                        tbGetDimensValue(unSelectSize).toFloat()
+                    )
+                    view.setTextColor(ContextCompat.getColor(context, unSelectColor))
+                    view.background = ContextCompat.getDrawable(context, unSelectItemBg)
+                }
+            }
+
+        }
+
+        override fun onTabSelected(p0: TabLayout.Tab?) {
+            p0?.let {
+                viewPager?.currentItem = it.position
+                mOnTabSelected?.invoke(it.position)
+                it.customView.let { view ->
+                    view as TextView
+                    view.setTextSize(
+                        TypedValue.COMPLEX_UNIT_PX,
+                        tbGetDimensValue(selectSize).toFloat()
+                    )
+                    view.setTextColor(ContextCompat.getColor(context, selectColor))
+                    view.background = ContextCompat.getDrawable(context, selectItemBg)
+                }
+            }
+        }
+    })
+
 }
 
 /*初始化图片轮播设置*/
@@ -313,7 +424,8 @@ fun RecyclerView?.init(
         //添加头部
         if (headerViews.isNotEmpty()) {
             headerViews.forEach {
-                val bind: ViewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), it, this, false)
+                val bind: ViewDataBinding =
+                    DataBindingUtil.inflate(LayoutInflater.from(context), it, this, false)
                 b.add(bind)
                 addHeaderView(bind.root)
             }
@@ -321,7 +433,8 @@ fun RecyclerView?.init(
         //添加尾部
         if (footerViews.isNotEmpty()) {
             footerViews.forEach {
-                val bind: ViewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), it, this, false)
+                val bind: ViewDataBinding =
+                    DataBindingUtil.inflate(LayoutInflater.from(context), it, this, false)
                 b.add(bind)
                 addFooterView(bind.root)
             }
@@ -331,7 +444,10 @@ fun RecyclerView?.init(
 }
 
 /*AppBarLayout 根据制定的滑动高度得到比例因子,达到透明度的变化*/
-fun AppBarLayout.scrollScale(targetHeight: Float, scaleValue: ((scaleValue: Float, scrollY: Int) -> Unit)) {
+fun AppBarLayout.scrollScale(
+    targetHeight: Float,
+    scaleValue: ((scaleValue: Float, scrollY: Int) -> Unit)
+) {
     var scale = 0f
     this.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
         scale = Math.abs(p1) / targetHeight
@@ -398,7 +514,11 @@ fun ViewPager.tbOnPageLisener(
             onPageScrollStateChanged?.invoke(state)
         }
 
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
             onPageScrolled?.invoke(position, positionOffset, positionOffsetPixels)
         }
 
@@ -555,7 +675,11 @@ fun WebView.init(
             this@init.measure(w, h)
         }
 
-        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+        override fun onReceivedSslError(
+            view: WebView?,
+            handler: SslErrorHandler?,
+            error: SslError?
+        ) {
             // 默认是handle.cancel()的，即遇到错误即中断
             handler?.proceed()
         }
@@ -598,7 +722,8 @@ fun NotificationManager.tbNotify(
     val chan: NotificationChannel
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         if (getNotificationChannel(channelId) == null) {
-            chan = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+            chan =
+                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
             chan.setShowBadge(false)//禁止该渠道使用角标
             // 设置通知出现时的闪灯（如果 android 设备支持的话）
             chan.enableLights(true)
@@ -620,7 +745,10 @@ fun NotificationManager.tbNotify(
     val peddingIntent = PendingIntent.getActivity(
         TbApplication.mApplicationContext,
         0,
-        Intent(TbApplication.mApplicationContext, tartActivityClass).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        Intent(
+            TbApplication.mApplicationContext,
+            tartActivityClass
+        ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
         PendingIntent.FLAG_UPDATE_CURRENT
     )
     mBuilder.setContentTitle(title)
@@ -680,7 +808,10 @@ fun TextView.initLookAll(
     //获取内容
     val content = StringBuffer()
     for (i in text.toString().indices) {
-        if ((text.toString()[i] in 'a'..'z') || (text.toString()[i] in 'A'..'Z') || Character.isDigit(text.toString()[i])) {
+        if ((text.toString()[i] in 'a'..'z') || (text.toString()[i] in 'A'..'Z') || Character.isDigit(
+                text.toString()[i]
+            )
+        ) {
             content.append("${text.toString()[i]} ")
         } else {
             content.append("${text.toString()[i]}")
@@ -689,9 +820,11 @@ fun TextView.initLookAll(
     //获取TextView的画笔对象
     val paint = paint
     //每行文本的布局宽度
-    val width = (parent as ViewGroup).measuredWidth - paddingStart - paddingEnd - marginLeft - marginEnd
+    val width =
+        (parent as ViewGroup).measuredWidth - paddingStart - paddingEnd - marginLeft - marginEnd
     //实例化StaticLayout 传入相应参数
-    val staticLayout = StaticLayout(content, paint, width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0f, false)
+    val staticLayout =
+        StaticLayout(content, paint, width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0f, false)
     if (staticLayout.lineCount > maxLine) {
         //定义收缩后的文本内容
         val index = staticLayout.getLineStart(maxLine) - 1

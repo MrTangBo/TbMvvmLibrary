@@ -79,6 +79,27 @@ fun Date.tbDate2Millis(): Long {
     return this.time
 }
 
+/**
+ *@作者：tb
+ *@时间：2019/12/11
+ *@描述：转换时间为00：00：00
+ */
+fun tbStringForTime(timeMs: Long): String {
+    if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
+        return "00:00"
+    }
+    val totalSeconds = timeMs / 1000
+    val seconds = (totalSeconds % 60).toInt()
+    val minutes = (totalSeconds / 60 % 60).toInt()
+    val hours = (totalSeconds / 3600).toInt()
+    val stringBuilder = StringBuilder()
+    val mFormatter = Formatter(stringBuilder, Locale.getDefault())
+    return if (hours > 0) {
+        mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
+    } else {
+        mFormatter.format("%02d:%02d", minutes, seconds).toString()
+    }
+}
 
 
 

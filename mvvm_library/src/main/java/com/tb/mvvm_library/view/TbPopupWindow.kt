@@ -178,7 +178,7 @@ class TbPopupWindow(
         super.showAsDropDown(anchor, xoff, yoff, gravity)
     }
 
-    override fun showAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
+        override fun showAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
         parms?.alpha = windowTransScale
         mActivity.window.attributes = parms
         when (gravity) {
