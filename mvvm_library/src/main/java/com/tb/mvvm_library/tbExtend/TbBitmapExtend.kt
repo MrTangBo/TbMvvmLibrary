@@ -1,6 +1,7 @@
 package com.tb.mvvm_library.tbExtend
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -84,19 +85,12 @@ fun Bitmap?.tbBitmapSave(fileName: String, quality: Int = 100) {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-    // 最后通知图库更新
-    TbApplication.mApplicationContext.sendBroadcast(
-        Intent(
-            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-            file.absolutePath.toUri()
-        )
-    )
 }
 
 /*保存bitmap quality保存质量*/
 fun Bitmap?.tbBitmapSaveSdCard(fileName: String, quality: Int = 100) {
     if (this == null) return
-    val fileDir = File(Environment.getExternalStorageDirectory(), tbApkInfo()?.apkName + File.separator)
+    val fileDir = File(Environment.getExternalStorageDirectory(), tbApkInfo().apkName + File.separator)
     if (!fileDir.exists()) {
         fileDir.mkdir()
     }
@@ -112,6 +106,10 @@ fun Bitmap?.tbBitmapSaveSdCard(fileName: String, quality: Int = 100) {
     } catch (e: Exception) {
         e.printStackTrace()
     }
+    val values = ContentValues()
+    values.put(MediaStore.Images.Media.DATA, file.absolutePath)
+    values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+    TbApplication.mApplicationContext.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
     // 最后通知图库更新
     TbApplication.mApplicationContext.sendBroadcast(
         Intent(

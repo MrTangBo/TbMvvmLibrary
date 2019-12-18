@@ -25,6 +25,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import kotlin.system.exitProcess
 
+
 abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
 
     open var baseActivityBing: ViewDataBinding? = null
@@ -168,6 +169,4 @@ abstract class TbBaseActivity : AppCompatActivity(), LoadDialogListener {
     open fun onUserEvent(event: TbEventBusInfo) {
         eventBundle = event.bundle
     }
-
-
 }
