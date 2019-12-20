@@ -69,7 +69,7 @@ class TbDividerItemDecoration : RecyclerView.ItemDecoration {
     ) {
         this.setOrientation(orientation)
         mDividerHeight = dividerHeight
-        LogUtils.log("mDividerHeight$mDividerHeight===================")
+//        LogUtils.log("mDividerHeight$mDividerHeight===================")
 
         //抗锯齿画笔
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -168,7 +168,7 @@ class TbDividerItemDecoration : RecyclerView.ItemDecoration {
             //item底部的Y轴坐标+margin值
             val y = child.bottom + layoutParams.bottomMargin
             val height = y + mDividerHeight
-            LogUtils.log("height$height===================")
+//            LogUtils.log("height$height===================")
 
             if (mDrawable != null) {
                 //setBounds(x,y,width,height); x:组件在容器X轴上的起点 y:组件在容器Y轴上的起点

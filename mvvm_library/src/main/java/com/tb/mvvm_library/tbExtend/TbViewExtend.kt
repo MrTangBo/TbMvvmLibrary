@@ -533,6 +533,7 @@ fun SearchView.init(
     textColor: Int = R.color.tb_text_black,
     textHitStr: CharSequence = "搜索",
     textHitColor: Int = R.color.tb_text_dark,
+    isExpand: Boolean = true,
     getViews: ((mSearchButton: ImageView, mCloseButton: ImageView, mCollapsedButton: ImageView, mSearchAutoComplete: SearchView.SearchAutoComplete) -> Unit)? = null,
     textSize: Int = tbGetDimensValue(R.dimen.tb_text28),
     searchBg: Int = R.drawable.tb_bg_search,
@@ -557,8 +558,11 @@ fun SearchView.init(
     background = ContextCompat.getDrawable(this.context, searchBg)
 
     setIconifiedByDefault(false)
-    onActionViewExpanded()
-
+    if (isExpand) {
+        onActionViewExpanded()
+    } else {
+        onActionViewCollapsed()
+    }
     val mSearchButton: ImageView
     val mCloseButton: ImageView
     val mCollapsedButton: ImageView
@@ -585,6 +589,7 @@ fun SearchView.init(
     mSearchAutoComplete.setHintTextColor(ContextCompat.getColor(this.context, textHitColor))
     mSearchAutoComplete.setTextColor(ContextCompat.getColor(this.context, textColor))
     mSearchAutoComplete.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
+    mSearchAutoComplete.background = null
     if (isClick) {
         mSearchAutoComplete.isFocusable = false
         mSearchAutoComplete.isFocusableInTouchMode = false

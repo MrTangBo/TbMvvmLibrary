@@ -90,11 +90,7 @@ fun Bitmap?.tbBitmapSave(fileName: String, quality: Int = 100) {
 /*保存bitmap quality保存质量*/
 fun Bitmap?.tbBitmapSaveSdCard(fileName: String, quality: Int = 100) {
     if (this == null) return
-    val fileDir = File(Environment.getExternalStorageDirectory(), tbApkInfo().apkName + File.separator)
-    if (!fileDir.exists()) {
-        fileDir.mkdir()
-    }
-    val file = File(fileDir, "$fileName.png")
+    val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "$fileName.png")
     if (!file.exists()) {
         file.createNewFile()
     }

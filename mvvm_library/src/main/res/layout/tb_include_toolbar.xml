@@ -5,6 +5,8 @@
     android:id="@+id/tb_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:minHeight="@dimen/toolbarHeight"
     app:contentInsetStart="0dp"
     app:contentInsetStartWithNavigation="0dp"
@@ -14,11 +16,15 @@
     <FrameLayout
         android:id="@+id/tb_toolbar_f"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbarHeight"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:gravity="center_vertical"
             tools:ignore="UselessParent">
 
@@ -52,15 +58,24 @@
                 android:textSize="@dimen/toolbarCenterTextSize"
                 tools:ignore="RelativeOverlap" />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/tb_toolbar_searView"
+            <FrameLayout
+                android:id="@+id/mSearchFrameLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/backIcon"
                 android:layout_toStartOf="@+id/right_Linear"
-                android:maxWidth="@dimen/x720"
-                android:visibility="gone" />
+                android:layout_toEndOf="@+id/backIcon"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/tb_toolbar_searView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/x70"
+                    android:layout_gravity="end"
+                    android:visibility="gone" />
+            </FrameLayout>
+
 
             <LinearLayout
                 android:id="@+id/right_Linear"
