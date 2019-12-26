@@ -8,9 +8,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.novoda:bintray-release:0.9.1'//上传jecenter插件
+        classpath 'com.novoda:bintray-release:0.9.2' //上传jecenter插件
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -22,11 +22,15 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven { url 'D:\\repository' }
-        
     }
-    tasks.withType(Javadoc) {//防止出现检查javadoc导致出错
-        options.addStringOption('Xdoclint:none', '-quiet')
-        options.addStringOption('encoding', 'UTF-8')
+
+    //防止出现检查javadoc导致出错
+    tasks.withType(Javadoc) {
+        options {
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
     }
 }
 
