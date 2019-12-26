@@ -16,10 +16,6 @@
         app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="@dimen/x10">
 
-        <com.tb.mvvm_library.view.CarCountView
-            android:layout_width="@dimen/x300"
-            android:layout_height="@dimen/x65"/>
-
         <TextView
             android:id="@+id/saveImage"
             android:layout_width="match_parent"

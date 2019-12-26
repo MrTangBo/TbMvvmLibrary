@@ -28,7 +28,7 @@ android {
             mavenDeployer {
                 pom.groupId = "com.tb.mvvm.library"
                 pom.artifactId = "mvvm-library"
-                pom.version = "1.0.7"
+                pom.version = "1.0.1"
                 repository(url: "file://localhost/" + "D:/repository")
 //                   {authentication(userName: "admin", password: "admin123")}
             }

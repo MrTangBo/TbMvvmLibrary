@@ -125,11 +125,10 @@ class LGNineGridView : ViewGroup {
                 }
                 view = imageCreator!!.createImageView(context)
                 addView(view)
-                view.setOnClickListener { v ->
-                    onItemClick?.invoke(i, v)
-                }
                 view.tbImageLongPress(context as AppCompatActivity, readQRCode = { readStr ->
                     readQRCode?.invoke(readStr)
+                },clickImg = {
+                    onItemClick?.invoke(i, view)
                 })
             }
             imageCreator!!.loadImage(context, url, view as TbPressImageView)

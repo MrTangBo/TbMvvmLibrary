@@ -3,6 +3,7 @@ package com.tb.mvvm_library.tbExtend
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Handler
 import android.view.GestureDetector
 import android.view.Gravity
 import android.view.MotionEvent
@@ -42,7 +43,10 @@ import java.util.*
  */
 //常规的加载
 @BindingAdapter("imageUrl", "tb_scaleType")
-fun ImageView.showImage(imageUrl: String, scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP) {
+fun ImageView.showImage(
+    imageUrl: String,
+    scaleType: ImageView.ScaleType = ImageView.ScaleType.CENTER_CROP
+) {
     GlideUtil.getInstance().showImage(this.context, imageUrl, this, scaleType)
 }
 
@@ -79,7 +83,8 @@ fun List<String>?.tbUpLoadImage(
             val partMap = HashMap<String, RequestBody>()
             it.forEachIndexed { index, file ->
                 val fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-                partMap[name + if (showIndex) index else "" + "\"; filename=\"" + file.name] = fileBody
+                partMap[name + if (showIndex) index else "" + "\"; filename=\"" + file.name] =
+                    fileBody
             }
             if (key == null || value == null) {
                 zipListener.zipListener(partMap)
@@ -96,48 +101,57 @@ fun List<String>?.tbUpLoadImage(
 //长按，通过zxing读取图片，判断是否有二维码
 fun ImageView?.tbImageLongPress(
     activity: AppCompatActivity,
-    readQRCode: ((readStr: String) -> Unit)? = null
+    readQRCode: ((readStr: String) -> Unit)? = null,
+    clickImg: TbOnClick = null
 ) {
     if (this == null) return
-    val mGestureDetector = GestureDetector(activity, object : GestureDetector.SimpleOnGestureListener() {
-        override fun onLongPress(e: MotionEvent?) {
-            val bitmap = drawable.toBitmap()
-            val pop = TbPopupWindow(activity, R.layout.tb_pop_save_image)
-            val bind: TbPopSaveImageBinding = pop.popBaseBind as TbPopSaveImageBinding
-            bind.saveImage.setOnClickListener {
-                context.tbRequestPermission(
-                    arrayListOf(
-                        PermissionItem(
-                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            "存储",
-                            R.drawable.permission_ic_storage
-                        )
-                    ), permissionSuccess = {
-                        bitmap.tbBitmapSaveSdCard("${System.currentTimeMillis()}")//保存图片
-                        tbShowToast("保存成功！")
+
+    val mGestureDetector =
+        GestureDetector(activity, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onLongPress(e: MotionEvent?) {
+                val bitmap = drawable.toBitmap()
+                val pop = TbPopupWindow(activity, R.layout.tb_pop_save_image)
+                val bind: TbPopSaveImageBinding = pop.popBaseBind as TbPopSaveImageBinding
+                bind.saveImage.setOnClickListener {
+                    context.tbRequestPermission(
+                        arrayListOf(
+                            PermissionItem(
+                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                "存储",
+                                R.drawable.permission_ic_storage
+                            )
+                        ), permissionSuccess = {
+                            bitmap.tbBitmapSaveSdCard("${System.currentTimeMillis()}")//保存图片
+                            tbShowToast("保存成功！")
+                            pop.dismiss()
+                        }
+                    )
+                }
+                val re: Result? = tbReadQRCode()
+                if (re == null) {
+                    bind.readRQCode.visibility = View.GONE
+                } else {
+                    bind.readRQCode.visibility = View.VISIBLE
+                    bind.readRQCode.setOnClickListener {
+                        readQRCode?.invoke(re.text)
                         pop.dismiss()
                     }
+                }
+                pop.showAsDropDown(
+                    this@tbImageLongPress,
+                    e?.x!!.toInt(), -e.y.toInt(), Gravity.TOP
                 )
             }
-            val re: Result? = tbReadQRCode()
-            if (re == null) {
-                bind.readRQCode.visibility = View.GONE
-            } else {
-                bind.readRQCode.visibility = View.VISIBLE
-                bind.readRQCode.setOnClickListener {
-                    readQRCode?.invoke(re.text)
-                    pop.dismiss()
-                }
+
+
+            override fun onSingleTapUp(e: MotionEvent?): Boolean {
+                clickImg?.invoke()
+                return super.onSingleTapUp(e)
             }
-            pop.showAsDropDown(
-                this@tbImageLongPress,
-                e?.x!!.toInt(), -e.y.toInt(), Gravity.TOP
-            )
-        }
-    })
+        })
     setOnTouchListener { _, motionEvent ->
         mGestureDetector.onTouchEvent(motionEvent)
-        return@setOnTouchListener false
+        return@setOnTouchListener true
     }
 }
 
