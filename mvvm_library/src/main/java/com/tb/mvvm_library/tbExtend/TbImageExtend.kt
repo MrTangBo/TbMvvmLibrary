@@ -102,14 +102,13 @@ fun List<String>?.tbUpLoadImage(
 fun ImageView?.tbImageLongPress(
     activity: AppCompatActivity,
     readQRCode: ((readStr: String) -> Unit)? = null,
-    clickImg: TbOnClick = null
+    clickImg: TbOnClick = null,
+    imageUrl: String = ""
 ) {
     if (this == null) return
-
     val mGestureDetector =
         GestureDetector(activity, object : GestureDetector.SimpleOnGestureListener() {
             override fun onLongPress(e: MotionEvent?) {
-                val bitmap = drawable.toBitmap()
                 val pop = TbPopupWindow(activity, R.layout.tb_pop_save_image)
                 val bind: TbPopSaveImageBinding = pop.popBaseBind as TbPopSaveImageBinding
                 bind.saveImage.setOnClickListener {
@@ -121,7 +120,15 @@ fun ImageView?.tbImageLongPress(
                                 R.drawable.permission_ic_storage
                             )
                         ), permissionSuccess = {
-                            bitmap.tbBitmapSaveSdCard("${System.currentTimeMillis()}")//保存图片
+                            object :Thread(){
+                                override fun run() {
+                                    val bm = tbBitmapFromInternet(imageUrl)
+                                    if (activity.isDestroyed){ return }
+                                    activity.runOnUiThread {
+                                        bm?.tbBitmapSaveSdCard("${System.currentTimeMillis()}")//保存图片
+                                    }
+                                }
+                            }.start()
                             tbShowToast("保存成功！")
                             pop.dismiss()
                         }
@@ -143,7 +150,7 @@ fun ImageView?.tbImageLongPress(
                 )
             }
 
-
+            /*单击*/
             override fun onSingleTapUp(e: MotionEvent?): Boolean {
                 clickImg?.invoke()
                 return super.onSingleTapUp(e)

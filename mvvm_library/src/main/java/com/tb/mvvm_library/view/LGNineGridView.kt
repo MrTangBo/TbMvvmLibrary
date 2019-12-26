@@ -50,7 +50,11 @@ class LGNineGridView : ViewGroup {
         initView(context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initView(context, attrs)
     }
 
@@ -62,12 +66,20 @@ class LGNineGridView : ViewGroup {
         this.mContext = context
         val defaultSpace = tbGetDimensValue(R.dimen.x2)
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LGNineGridView)
-        space = typedArray.getDimension(R.styleable.LGNineGridView_space, defaultSpace.toFloat()).toInt()
-        singleImageHeightRatio = typedArray.getFloat(R.styleable.LGNineGridView_singleImageRatio, 1f)
+        space = typedArray.getDimension(R.styleable.LGNineGridView_space, defaultSpace.toFloat())
+            .toInt()
+        singleImageHeightRatio =
+            typedArray.getFloat(R.styleable.LGNineGridView_singleImageRatio, 1f)
         singleImageMode =
-            typedArray.getInteger(R.styleable.LGNineGridView_singleImageRatioMode, SINGLE_IMAGE_MODE_SPECIFIED_RATIO)
+            typedArray.getInteger(
+                R.styleable.LGNineGridView_singleImageRatioMode,
+                SINGLE_IMAGE_MODE_SPECIFIED_RATIO
+            )
         widthRatioToParent =
-            typedArray.getFloat(R.styleable.LGNineGridView_singleImageWidthRatioToParent, DEFAULTWIDTHRELATIVETOPARENT)
+            typedArray.getFloat(
+                R.styleable.LGNineGridView_singleImageWidthRatioToParent,
+                DEFAULTWIDTHRELATIVETOPARENT
+            )
         typedArray.recycle()
     }
 
@@ -127,9 +139,9 @@ class LGNineGridView : ViewGroup {
                 addView(view)
                 view.tbImageLongPress(context as AppCompatActivity, readQRCode = { readStr ->
                     readQRCode?.invoke(readStr)
-                },clickImg = {
+                }, clickImg = {
                     onItemClick?.invoke(i, view)
-                })
+                }, imageUrl = url)
             }
             imageCreator!!.loadImage(context, url, view as TbPressImageView)
             view.visibility = View.VISIBLE
